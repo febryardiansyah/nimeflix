@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nimeflix/constants/BaseConstants.dart';
+import 'package:nimeflix/ui/home_screen/complete_anime.dart';
+import 'package:nimeflix/ui/home_screen/genre_list.dart';
+import 'package:nimeflix/ui/home_screen/my_carousel.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key key}) : super(key: key);
@@ -37,13 +40,16 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             )
           ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate((context,idx){
-              return ListTile(
-                title: Text('item $idx'),
-              );
-            }),
+          SliverToBoxAdapter(
+            child: MyCarousel(),
+          ),
+          SliverToBoxAdapter(
+            child: CompleteAnime(),
+          ),
+          SliverToBoxAdapter(
+            child: GenreList()
           )
+          // GenreList(),
         ],
       ),
     );

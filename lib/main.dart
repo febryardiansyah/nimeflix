@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nimeflix/routes.dart';
 import 'package:nimeflix/ui/home_screen/home_screen.dart';
 
 void main() {
@@ -11,7 +12,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(),
-      home: HomeScreen(),
+      initialRoute: rBottomNav,
+      onGenerateRoute: generateRoute,
     );
   }
 }
