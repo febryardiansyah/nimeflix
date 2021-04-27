@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nimeflix/routes.dart';
 
 class CompleteAnime extends StatefulWidget {
   CompleteAnime({Key key}) : super(key: key);
@@ -34,35 +35,40 @@ class _CompleteAnimeState extends State<CompleteAnime> {
               itemBuilder: (context,i){
                 return Padding(
                   padding: EdgeInsets.only(right: 8),
-                  child: Stack(
-                    children: [
-                      Container(
-                        width: 180,
-                        height: MediaQuery.of(context).size.height,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          image: DecorationImage(
-                            image: NetworkImage('https://zetizen.radarcirebon.com/wp-content/uploads/2020/09/CSGO.jpg',),
-                            fit: BoxFit.cover
-                          )
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.all(8),
-                        child: Text('Episode 6',style: TextStyle(color: Colors.white,),),
-                        color: Colors.red,
-                      ),
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Container(
+                  child: GestureDetector(
+                    onTap: (){
+                      Navigator.pushNamed(context, rDetailAnime);
+                    },
+                    child: Stack(
+                      children: [
+                        Container(
                           width: 180,
-                          height: 30,
-                          padding: EdgeInsets.all(8),
-                          child: Center(child: Text('CSGO',style: TextStyle(color: Colors.white),),),
-                          color: Colors.black.withOpacity(0.6),
+                          height: MediaQuery.of(context).size.height,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            image: DecorationImage(
+                              image: NetworkImage('https://zetizen.radarcirebon.com/wp-content/uploads/2020/09/CSGO.jpg',),
+                              fit: BoxFit.cover
+                            )
+                          ),
                         ),
-                      )
-                    ],
+                        Container(
+                          padding: EdgeInsets.all(8),
+                          child: Text('Episode 6',style: TextStyle(color: Colors.white,),),
+                          color: Colors.red,
+                        ),
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Container(
+                            width: 180,
+                            height: 30,
+                            padding: EdgeInsets.all(8),
+                            child: Center(child: Text('CSGO',style: TextStyle(color: Colors.white),),),
+                            color: Colors.black.withOpacity(0.6),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 );
               },
