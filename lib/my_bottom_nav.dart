@@ -1,3 +1,4 @@
+import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:nimeflix/ui/home_screen/home_screen.dart';
 
@@ -20,30 +21,30 @@ class _MyBottomNavState extends State<MyBottomNav> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _children[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        selectedItemColor: Colors.blue,
-        onTap: (val){
+      bottomNavigationBar: BottomNavyBar(
+        selectedIndex: _currentIndex,
+        // selectedItemColor: Colors.blue,
+        onItemSelected: (val){
           setState(() {
             _currentIndex = val;
           });
         },
         items: [
-          BottomNavigationBarItem(
+          BottomNavyBarItem(
             icon: Icon(Icons.home),
             title: Text('Home')
           ),
-          BottomNavigationBarItem(
+          BottomNavyBarItem(
             icon: Icon(Icons.search),
             title: Text('Search')
           ),
-          BottomNavigationBarItem(
+          BottomNavyBarItem(
             icon: Icon(Icons.bookmark),
             title: Text('Bookmarks')
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.more_horiz),
-            title: Text('Bookmarks')
+          BottomNavyBarItem(
+            icon: Icon(Icons.more_vert),
+            title: Text('More')
           ),
         ],
       ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nimeflix/my_bottom_nav.dart';
-import 'package:nimeflix/ui/detail_anime_screen/detail_anime.dart';
+import 'package:nimeflix/ui/detail/detail_anime.dart';
+import 'package:nimeflix/ui/detail/watch_anime_screen.dart';
+
 
 MaterialPageRoute _pageRoute ({RouteSettings settings, Widget body})=>MaterialPageRoute(
   settings: settings,
@@ -17,6 +19,9 @@ Route generateRoute(RouteSettings settings){
     case rDetailAnime:
       _route = _pageRoute(body: DetailAnime(),settings: settings);
       break;
+    case rWatchAnime:
+      _route = _pageRoute(body: WatchAnimeScreen(),settings: settings);
+      break;
   }
   return _route;
 }
@@ -24,3 +29,4 @@ Route generateRoute(RouteSettings settings){
 const String rBottomNav = '/';
 const String rSplashScreen = '/splash';
 const String rDetailAnime = '/detailAnime';
+const String rWatchAnime = '/watchAnime';
