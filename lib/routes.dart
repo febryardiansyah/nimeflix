@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nimeflix/my_bottom_nav.dart';
-import 'package:nimeflix/ui/detail/detail_anime.dart';
+import 'package:nimeflix/ui/detail/detail_anime_screen.dart';
+import 'package:nimeflix/ui/detail/index_watch_anime.dart';
 import 'package:nimeflix/ui/detail/watch_anime_screen.dart';
 
 
@@ -17,10 +18,10 @@ Route generateRoute(RouteSettings settings){
       _route = _pageRoute(body: MyBottomNav(),settings: settings);
       break;
     case rDetailAnime:
-      _route = _pageRoute(body: DetailAnime(),settings: settings);
+      _route = _pageRoute(body: DetailAnimeScreen(id: _args,),settings: settings);
       break;
     case rWatchAnime:
-      _route = _pageRoute(body: WatchAnimeScreen(),settings: settings);
+      _route = _pageRoute(body: IndexWatchAnime(id: _args,),settings: settings);
       break;
   }
   return _route;

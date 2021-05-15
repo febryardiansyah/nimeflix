@@ -41,6 +41,7 @@ dependencies:
   equatable: ^1.0.1
   video_player: ^0.10.11+1
   shimmer: ^1.1.2
+  loading_indicator: ^1.2.0
 
 dev_dependencies:
   flutter_test:

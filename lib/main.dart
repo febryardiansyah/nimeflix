@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nimeflix/bloc/get_detail_anime/get_detail_anime_cubit.dart';
+import 'package:nimeflix/bloc/get_eps_anime/get_eps_anime_cubit.dart';
 import 'package:nimeflix/bloc/get_genres/get_genres_cubit.dart';
 
 import 'package:nimeflix/routes.dart';
@@ -20,6 +22,12 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => GetGenresCubit(),
+        ),
+        BlocProvider(
+          create: (_) => GetDetailAnimeCubit(),
+        ),
+        BlocProvider(
+          create: (_) => GetEpsAnimeCubit(),
         ),
       ],
       child: MaterialApp(

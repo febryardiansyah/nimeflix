@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nimeflix/bloc/get_home/get_home_cubit.dart';
+import 'package:nimeflix/routes.dart';
 import 'package:nimeflix/widgets/my_shimmer.dart';
 
 class MyCarousel extends StatefulWidget {
@@ -42,7 +43,8 @@ class _MyCarouselState extends State<MyCarousel> {
                 items: _data.map((e) {
                   return InkWell(
                     onTap: (){
-
+                      print(e.id);
+                      Navigator.pushNamed(context, rDetailAnime,arguments: e.id);
                     },
                     child: ClipRRect(
                       borderRadius: BorderRadius.all(Radius.circular(8)),

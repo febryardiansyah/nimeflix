@@ -51,7 +51,7 @@ class _CompleteAnimeState extends State<CompleteAnime> {
                         padding: EdgeInsets.only(right: 8),
                         child: GestureDetector(
                           onTap: (){
-                            Navigator.pushNamed(context, rDetailAnime);
+                            Navigator.pushNamed(context, rDetailAnime,arguments: _item.id);
                           },
                           child: Stack(
                             children: [
