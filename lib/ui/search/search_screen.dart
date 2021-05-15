@@ -38,9 +38,10 @@ class _SearchScreenState extends State<SearchScreen> {
                   hintText: 'Search anime..',
                   filled: true,
                   fillColor: Colors.black.withOpacity(0.7),
+                  prefixIcon: Icon(Icons.search),
                   border: InputBorder.none,
                   suffixIcon: _query.text.isEmpty?null:IconButton(
-                    icon: Icon(Icons.search,color: Colors.red,),
+                    icon: Icon(Icons.send,color: Colors.red,),
                     onPressed: (){
                       Helpers.requestNode(context);
                       context.read<SearchAnimeCubit>().searchAnime(query: _query.text);
@@ -74,10 +75,10 @@ class _SearchScreenState extends State<SearchScreen> {
                             physics: ClampingScrollPhysics(),
                             itemBuilder: (context,i){
                               final _item = _data[i];
-                              return Padding(
-                                padding: EdgeInsets.only(bottom: 10),
-                                child: GestureDetector(
-                                  onTap: ()=>Navigator.pushNamed(context, rDetailAnime,arguments: _item.id),
+                              return GestureDetector(
+                                onTap: ()=>Navigator.pushNamed(context, rDetailAnime,arguments: _item.id),
+                                child: Padding(
+                                  padding: EdgeInsets.only(bottom: 10),
                                   child: Row(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.start,

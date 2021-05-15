@@ -23,7 +23,9 @@ class _CompleteAnimeState extends State<CompleteAnime> {
             children: [
               Text('Complete Anime',style: TextStyle(fontSize: 24),),
               Spacer(),
-              Text('see more',style: TextStyle(color: Colors.orange,fontSize: 15),)
+              GestureDetector(
+                child: Text('lihat lainnya',style: TextStyle(color: Colors.orange,fontSize: 15),),
+                onTap: ()=>Navigator.pushNamed(context, rMoreCompleteAnime),),
             ],
           ),
           Container(

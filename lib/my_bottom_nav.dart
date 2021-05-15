@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:nimeflix/ui/home_screen/home_screen.dart';
 import 'package:nimeflix/ui/schedule/schedule_screen.dart';
 import 'package:nimeflix/ui/search/search_screen.dart';
+import 'package:nimeflix/ui/watch_later/watch_later_screen.dart';
 
 class MyBottomNav extends StatefulWidget {
   MyBottomNav({Key key}) : super(key: key);
@@ -16,7 +17,7 @@ class _MyBottomNavState extends State<MyBottomNav> {
   List<Widget> _children = [
     HomeScreen(),
     SearchScreen(),
-    HomeScreen(),
+    WatchLaterScreen(),
     HomeScreen(),
   ];
   @override

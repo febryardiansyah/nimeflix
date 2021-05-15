@@ -17,7 +17,10 @@ class OngoingAnime extends StatelessWidget {
             children: [
               Text('Ongoing Anime',style: TextStyle(fontSize: 24),),
               Spacer(),
-              Text('see more',style: TextStyle(color: Colors.orange,fontSize: 15),)
+              GestureDetector(
+                child: Text('lihat lainnya',style: TextStyle(color: Colors.orange,fontSize: 15),),
+                onTap: ()=>Navigator.pushNamed(context, rMoreOngoingAnime),
+              )
             ],
           ),
           Container(

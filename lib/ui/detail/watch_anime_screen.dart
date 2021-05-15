@@ -53,13 +53,16 @@ class _WatchAnimeScreenState extends State<WatchAnimeScreen> {
                   Navigator.pop(context);
                 },
               ),
-              Center(child: Text(widget.data.title,style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),textAlign: TextAlign.center,)),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Center(child: Text(widget.data.title,style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),textAlign: TextAlign.center,)),
+              ),
               Padding(
                 padding: EdgeInsets.only(left: 10,right: 10,top: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Download'),
+                    Text('Download episode ini'),
                     SizedBox(height: 10,),
                     Container(
                       margin: EdgeInsets.only(bottom: 10),

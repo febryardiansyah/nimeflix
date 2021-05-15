@@ -26,4 +26,15 @@ class MainRepo extends BaseService{
     return _res;
   }
 
+  Future<Response> getComplete({int page})async{
+    final _res = await request(endpoint: 'complete/page/$page');
+    print(_res.data['animeList'][0]['title']);
+    return _res;
+  }
+
+  Future<Response> getOngoing()async{
+    final _res = await request(endpoint: 'ongoing');
+    print(_res.data['animeList'][0]['title']);
+    return _res;
+  }
 }
