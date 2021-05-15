@@ -2,6 +2,7 @@ import 'package:better_player/better_player.dart';
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:nimeflix/models/episode_model.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:video_player/video_player.dart';
 
 class WatchAnimeScreen extends StatefulWidget {
@@ -73,7 +74,9 @@ class _WatchAnimeScreenState extends State<WatchAnimeScreen> {
                         children: widget.data.quality.lowQuality.downloadLinks.map((e) => ListTile(
                           title: Text(e.host),
                           trailing: Icon(Icons.file_download),
-                          onTap: (){},
+                          onTap: ()async{
+                            await launch(e.link);
+                          },
                         )).toList(),
                       ),
                     ),
@@ -90,7 +93,9 @@ class _WatchAnimeScreenState extends State<WatchAnimeScreen> {
                         children: widget.data.quality.mediumQuality.downloadLinks.map((e) => ListTile(
                           title: Text(e.host),
                           trailing: Icon(Icons.file_download),
-                          onTap: (){},
+                          onTap: ()async{
+                            await launch(e.link);
+                          },
                         )).toList(),
                       ),
                     ),
@@ -107,7 +112,9 @@ class _WatchAnimeScreenState extends State<WatchAnimeScreen> {
                         children: widget.data.quality.highQuality.downloadLinks.map((e) => ListTile(
                           title: Text(e.host),
                           trailing: Icon(Icons.file_download),
-                          onTap: (){},
+                          onTap: ()async{
+                            await launch(e.link);
+                          },
                         )).toList(),
                       ),
                     ),

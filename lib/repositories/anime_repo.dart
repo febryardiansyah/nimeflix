@@ -13,4 +13,11 @@ class AnimeRepo extends BaseService{
     print(_res.data);
     return _res;
   }
+
+  Future<Response> getBatchAnime({String id})async{
+    final _res = await request(endpoint: 'batch/$id');
+    print(_res.data);
+    return _res;
+  }
+
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nimeflix/my_bottom_nav.dart';
+import 'package:nimeflix/ui/detail/batch_anime_screen.dart';
 import 'package:nimeflix/ui/detail/detail_anime_screen.dart';
 import 'package:nimeflix/ui/detail/index_watch_anime.dart';
 import 'package:nimeflix/ui/detail/watch_anime_screen.dart';
@@ -23,6 +24,9 @@ Route generateRoute(RouteSettings settings){
     case rWatchAnime:
       _route = _pageRoute(body: IndexWatchAnime(id: _args,),settings: settings);
       break;
+    case rBatchAnime:
+      _route = _pageRoute(body: BatchAnimeScreen(data: _args,),settings: settings);
+      break;
   }
   return _route;
 }
@@ -31,3 +35,4 @@ const String rBottomNav = '/';
 const String rSplashScreen = '/splash';
 const String rDetailAnime = '/detailAnime';
 const String rWatchAnime = '/watchAnime';
+const String rBatchAnime = '/batchAnime';

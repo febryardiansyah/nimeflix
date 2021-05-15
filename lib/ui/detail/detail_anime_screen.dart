@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:loading_indicator/loading_indicator.dart';
 import 'package:nimeflix/bloc/get_detail_anime/get_detail_anime_cubit.dart';
 import 'package:nimeflix/routes.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nimeflix/widgets/my_loading_screen.dart';
+import 'package:nimeflix/widgets/reconnect_button.dart';
 
 class DetailAnimeScreen extends StatefulWidget {
   final String id;
@@ -30,43 +31,12 @@ class _DetailAnimeScreenState extends State<DetailAnimeScreen> {
       body: BlocBuilder<GetDetailAnimeCubit,GetDetailAnimeState>(
         builder:(context,state) {
           if (state is GetDetailAnimeLoading) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                LoadingIndicator(indicatorType: Indicator.ballClipRotateMultiple,color: Colors.white,),
-                Text('Tunggu sebentar...')
-              ],
-            );
+            return MyLoadingScreen();
           }
           if (state is GetDetailAnimeFailure) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(state.msg),
-                Padding(
-                  padding: EdgeInsets.only(top: 40),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      FlatButton(
-                        child: Text('Kembali'),
-                        color: Colors.transparent,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8),side: BorderSide(color: Colors.white)),
-                        onPressed: ()=>Navigator.pop(context),
-                      ),
-                      FlatButton(
-                        child: Text('Muat ulang',style: TextStyle(color: Colors.red),),
-                        color: Colors.transparent,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8),side: BorderSide(color: Colors.red)),
-                        onPressed: ()=>context.read<GetDetailAnimeCubit>().fetchDetailAnime(id: widget.id),
-                      ),
-                    ],
-                  ),
-                )
-              ],
+            return ReconnectButton(
+              onReconnect: ()=>context.read<GetDetailAnimeCubit>().fetchDetailAnime(id: widget.id),
+              msg: state.msg,
             );
           }
           if (state is GetDetailAnimeSuccess) {
@@ -226,15 +196,20 @@ class _DetailAnimeScreenState extends State<DetailAnimeScreen> {
                   ),
                   Padding(
                     padding: EdgeInsets.all(10),
-                    child: Container(
-                      padding: EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                          color: Colors.transparent,
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(width: 1,color: Colors.orange)
+                    child: GestureDetector(
+                      onTap: _data.batchLink.id == 'Masih kosong gan'?null:(){
+                        Navigator.pushNamed(context, rBatchAnime,arguments: _data);
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                            color: Colors.transparent,
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(width: 1,color: Colors.orange)
+                        ),
+                        child: Center(
+                            child: Text(_data.batchLink.id == 'Masih kosong gan'?_data.batchLink.id:_data.batchLink.id.split('-').join(' ').replaceAll('/', ''),textAlign: TextAlign.center,)),
                       ),
-                      child: Center(
-                          child: Text(_data.batchLink.id == 'Masih kosong gan'?_data.batchLink.id:_data.batchLink.id.split('-').join(' ').replaceAll('/', ''),textAlign: TextAlign.center,)),
                     ),
                   ),
                 ],
