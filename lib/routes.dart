@@ -4,6 +4,7 @@ import 'package:nimeflix/ui/detail/batch_anime_screen.dart';
 import 'package:nimeflix/ui/detail/detail_anime_screen.dart';
 import 'package:nimeflix/ui/detail/index_watch_anime.dart';
 import 'package:nimeflix/ui/detail/watch_anime_screen.dart';
+import 'package:nimeflix/ui/schedule/schedule_screen.dart';
 
 
 MaterialPageRoute _pageRoute ({RouteSettings settings, Widget body})=>MaterialPageRoute(
@@ -27,6 +28,9 @@ Route generateRoute(RouteSettings settings){
     case rBatchAnime:
       _route = _pageRoute(body: BatchAnimeScreen(data: _args,),settings: settings);
       break;
+    case rSchedule:
+      _route = _pageRoute(body: ScheduleScreen(),settings: settings);
+      break;
   }
   return _route;
 }
@@ -36,3 +40,4 @@ const String rSplashScreen = '/splash';
 const String rDetailAnime = '/detailAnime';
 const String rWatchAnime = '/watchAnime';
 const String rBatchAnime = '/batchAnime';
+const String rSchedule = '/schedule';

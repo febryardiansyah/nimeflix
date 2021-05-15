@@ -17,6 +17,7 @@ class DetailAnimeScreen extends StatefulWidget {
 
 class _DetailAnimeScreenState extends State<DetailAnimeScreen> {
   Size _size;
+  bool _isEpsReversed = false;
 
   @override
   void initState() {
@@ -144,6 +145,29 @@ class _DetailAnimeScreenState extends State<DetailAnimeScreen> {
                       ],
                     ),
                   ),
+                  Container(
+                    height: 50,
+                    width: _size.width,
+                    child: ListView.builder(
+                      itemCount: _data.genreList.length,
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      physics: ClampingScrollPhysics(),
+                      itemBuilder: (context,i){
+                        final _item = _data.genreList[i];
+                        return Container(
+                          padding: EdgeInsets.all(8),
+                          margin: EdgeInsets.all(8),
+                          child: Center(child: Text(_item.genreName)),
+                          decoration: BoxDecoration(
+                            color: Colors.transparent,
+                            border: Border.all(color: Colors.red,width: 1,),
+                            borderRadius: BorderRadius.circular(8)
+                          ),
+                        );
+                      },
+                    ),
+                  ),
                   Padding(
                     padding: EdgeInsets.only(top: 20),
                     child: Center(
@@ -153,40 +177,6 @@ class _DetailAnimeScreenState extends State<DetailAnimeScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 10,horizontal: 10),
                     child: Text(_data.synopsis,textAlign: TextAlign.justify,),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 10),
-                    child: Center(
-                      child: Text('List Episode',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(10),
-                    child: GridView.builder(
-                      itemCount: _data.episodeList.length,
-                      shrinkWrap: true,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,crossAxisSpacing: 5,mainAxisSpacing: 5,childAspectRatio: 2
-                      ),
-                      physics: ClampingScrollPhysics(),
-                      itemBuilder: (context,i){
-                        final _item = _data.episodeList[i];
-                        return GestureDetector(
-                          onTap: (){
-                            Navigator.pushNamed(context, rWatchAnime,arguments: _item.id);
-                          },
-                          child: Container(
-                            padding: EdgeInsets.all(8),
-                            child: Center(child: Text(_item.title.replaceAll(_data.title, '').replaceAll('Subtitle Indonesia', '').trim(),textAlign: TextAlign.center,)),
-                            decoration: BoxDecoration(
-                                color: i == 2?Colors.red:Colors.transparent,
-                                borderRadius: BorderRadius.circular(8),
-                                border: Border.all(width: 1,color: Colors.orange)
-                            ),
-                          ),
-                        );
-                      },
-                    ),
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 10),
@@ -208,8 +198,58 @@ class _DetailAnimeScreenState extends State<DetailAnimeScreen> {
                             border: Border.all(width: 1,color: Colors.orange)
                         ),
                         child: Center(
-                            child: Text(_data.batchLink.id == 'Masih kosong gan'?_data.batchLink.id:_data.batchLink.id.split('-').join(' ').replaceAll('/', ''),textAlign: TextAlign.center,)),
+                            child: Text(_data.batchLink.id == 'Masih kosong gan'?_data.batchLink.id:'Download ${_data.title} batch sub indo',textAlign: TextAlign.center,)),
                       ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 10),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('List Episode',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+                        IconButton(
+                          icon: Icon(Icons.sort_by_alpha),
+                          onPressed: (){
+                            setState(() {
+                              _isEpsReversed = !_isEpsReversed;
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    child: ListView.builder(
+                      itemCount: _data.episodeList.length,
+                      shrinkWrap: true,
+                      reverse: _isEpsReversed,
+                      // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      //     crossAxisCount: 3,crossAxisSpacing: 5,mainAxisSpacing: 5,childAspectRatio: 2
+                      // ),
+                      physics: ClampingScrollPhysics(),
+                      itemBuilder: (context,i){
+                        final _item = _data.episodeList[i];
+                        return Padding(
+                          padding: EdgeInsets.only(bottom: 8),
+                          child: GestureDetector(
+                            onTap: (){
+                              Navigator.pushNamed(context, rWatchAnime,arguments: _item.id);
+                            },
+                            child: Container(
+                              padding: EdgeInsets.all(8),
+                              child: Center(child: Text(_item.title.replaceAll(_data.title, '').replaceAll('Subtitle Indonesia', '').trim(),textAlign: TextAlign.center,)),
+                              decoration: BoxDecoration(
+                                  color: i == 2?Colors.red:Colors.transparent,
+                                  borderRadius: BorderRadius.circular(8),
+                                  border: Border.all(width: 1,color: Colors.orange)
+                              ),
+                            ),
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ],

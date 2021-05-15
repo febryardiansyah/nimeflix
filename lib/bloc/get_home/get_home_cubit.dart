@@ -9,7 +9,7 @@ part 'get_home_state.dart';
 
 class GetHomeCubit extends Cubit<GetHomeState> {
   GetHomeCubit() : super(GetHomeInitial());
-  final _repo = HomeRepo();
+  final _repo = MainRepo();
 
   Future<void> fetchHome()async{
     emit(GetHomeLoading());

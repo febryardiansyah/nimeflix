@@ -8,7 +8,7 @@ part 'get_genres_state.dart';
 
 class GetGenresCubit extends Cubit<GetGenresState> {
   GetGenresCubit() : super(GetGenresInitial());
-  final _repo = HomeRepo();
+  final _repo = MainRepo();
 
   Future<void> fetchGenres()async{
     emit(GetGenresLoading());

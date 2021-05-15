@@ -1,6 +1,8 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:nimeflix/ui/home_screen/home_screen.dart';
+import 'package:nimeflix/ui/schedule/schedule_screen.dart';
+import 'package:nimeflix/ui/search/search_screen.dart';
 
 class MyBottomNav extends StatefulWidget {
   MyBottomNav({Key key}) : super(key: key);
@@ -13,14 +15,17 @@ class _MyBottomNavState extends State<MyBottomNav> {
   int _currentIndex = 0;
   List<Widget> _children = [
     HomeScreen(),
-    HomeScreen(),
+    SearchScreen(),
     HomeScreen(),
     HomeScreen(),
   ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _children[_currentIndex],
+      body: IndexedStack(
+        children: _children,
+        index: _currentIndex,
+      ),
       bottomNavigationBar: BottomNavyBar(
         selectedIndex: _currentIndex,
         // selectedItemColor: Colors.blue,
