@@ -63,17 +63,17 @@ class _AnimeByGenreScreenState extends State<AnimeByGenreScreen> {
                       },
                       child: Stack(
                         children: [
-                          // Container(
-                          //   width: 180,
-                          //   height: MediaQuery.of(context).size.height,
-                          //   decoration: BoxDecoration(
-                          //       borderRadius: BorderRadius.circular(8),
-                          //       image: DecorationImage(
-                          //           image: NetworkImage(_item.thumb,),
-                          //           fit: BoxFit.cover
-                          //       )
-                          //   ),
-                          // ),
+                          Container(
+                            width: 180,
+                            height: MediaQuery.of(context).size.height,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                image: DecorationImage(
+                                    image: NetworkImage(_item.thumb,),
+                                    fit: BoxFit.cover
+                                )
+                            ),
+                          ),
                           Container(
                             padding: EdgeInsets.all(8),
                             child: Text(_item.episode,style: TextStyle(color: Colors.white,),),

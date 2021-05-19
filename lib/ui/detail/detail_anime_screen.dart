@@ -1,8 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:nimeflix/bloc/get_detail_anime/get_detail_anime_cubit.dart';
+import 'package:nimeflix/constants/BaseConstants.dart';
 import 'package:nimeflix/routes.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nimeflix/utils/hive_database/save_for_later_model.dart';
 import 'package:nimeflix/widgets/my_loading_screen.dart';
 import 'package:nimeflix/widgets/reconnect_button.dart';
 
@@ -19,10 +23,34 @@ class _DetailAnimeScreenState extends State<DetailAnimeScreen> {
   Size _size;
   bool _isEpsReversed = false;
 
+  final _saveForLaterBox = Hive.box(BaseConstants.hSaveForLater);
+  bool _isAnimeSaved = false;
+  SaveForLaterModel _saveForLaterModel;
+
+  void _checkIsSaved(){
+    for(int i = 0;i<_saveForLaterBox.length;i++){
+      _saveForLaterModel = _saveForLaterBox.getAt(i);
+      print('from db :${_saveForLaterModel.endpoint}');
+      print('id :${widget.id}');
+      if (_saveForLaterModel.endpoint == widget.id.replaceAll('/', '')) {
+        setState(() {
+          _isAnimeSaved = true;
+        });
+        break;
+      }
+      else{
+        setState(() {
+          _isAnimeSaved = false;
+        });
+      }
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     context.read<GetDetailAnimeCubit>().fetchDetailAnime(id: widget.id);
+    _checkIsSaved();
   }
 
   @override
@@ -75,9 +103,23 @@ class _DetailAnimeScreenState extends State<DetailAnimeScreen> {
                       Positioned(
                         top: 20,
                         right: 10,
-                        child: CircleAvatar(
-                          backgroundColor: Colors.black.withOpacity(0.6),
-                          child: Icon(Icons.bookmark_border,color: Colors.white,),
+                        child: WatchBoxBuilder(
+                          box: _saveForLaterBox,
+                          builder:(context,save)=> GestureDetector(
+                            onTap: (){
+                              final res = SaveForLaterModel(
+                                title: _data.title,endpoint: _data.animeId,status: _data.status,thumb: _data.thumb
+                              );
+                              setState(() {
+                                _isAnimeSaved = true;
+                              });
+                              _saveForLaterBox.add(res);
+                            },
+                            child: CircleAvatar(
+                              backgroundColor: Colors.black.withOpacity(0.6),
+                              child: Icon(Icons.bookmark_border,color: _isAnimeSaved?Colors.red:Colors.white,),
+                            ),
+                          ),
                         ),
                       ),
                       Align(

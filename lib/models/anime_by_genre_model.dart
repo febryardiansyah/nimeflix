@@ -8,11 +8,13 @@ class AnimeByGenreModel {
     this.score,
     this.releaseDate,
     this.genreList,
+    this.thumb
   });
 
   String animeName;
   String link;
   String id;
+  String thumb;
   String studio;
   String episode;
   num score;
@@ -25,6 +27,7 @@ class AnimeByGenreModel {
     id: json["id"],
     studio: json["studio"],
     episode: json["episode"],
+    thumb: json['thumb'],
     score: json["score"],
     releaseDate: json["release_date"],
     genreList: List<GenreList>.from(json["genre_list"].map((x) => GenreList.fromJson(x))),

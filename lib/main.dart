@@ -11,6 +11,8 @@ import 'package:nimeflix/bloc/get_genres/get_genres_cubit.dart';
 import 'package:nimeflix/bloc/get_ongoing_anime/get_ongoing_anime_cubit.dart';
 import 'package:nimeflix/bloc/get_schedule/get_schedule_cubit.dart';
 import 'package:nimeflix/bloc/search_anime/search_anime_cubit.dart';
+import 'package:nimeflix/constants/BaseConstants.dart';
+import 'package:nimeflix/utils/hive_database/save_for_later_model.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 
 import 'package:nimeflix/routes.dart';
@@ -21,6 +23,8 @@ void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   final _dir = await path_provider.getApplicationDocumentsDirectory();
   Hive.init(_dir.path);
+  Hive.openBox(BaseConstants.hSaveForLater);
+  Hive.registerAdapter(SaveForLaterModelAdapter());
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitDown,DeviceOrientation.portraitUp])
   .then((value) => runApp(MyApp()));
 }

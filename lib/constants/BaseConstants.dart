@@ -3,4 +3,5 @@ class BaseConstants{
   static String wallpaper = 'assets/images/Day.jpg';
   static String baseUrl = 'https://anime.rifkiystark.tech/api/';
   static String errorMessage = 'Terjadi kesalahan, silahkan coba lagi';
+  static String hSaveForLater = 'SaveForLater';
 }
