@@ -58,6 +58,21 @@ class _WatchAnimeScreenState extends State<WatchAnimeScreen> {
                 child: Center(child: Text(widget.data.title,style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),textAlign: TextAlign.center,)),
               ),
               Padding(
+                padding: EdgeInsets.all(8),
+                child: FlatButton(
+                  onPressed: null,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text('Note : Jika streaming tidak bisa, silahkan download episode ini dibawah',style: TextStyle(color: Colors.red),),
+                  ),
+                  color: Colors.transparent,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    side: BorderSide(color: Colors.red)
+                  ),
+                ),
+              ),
+              Padding(
                 padding: EdgeInsets.only(left: 10,right: 10,top: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

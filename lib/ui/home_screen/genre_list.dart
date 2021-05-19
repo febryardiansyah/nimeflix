@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nimeflix/bloc/get_genres/get_genres_cubit.dart';
+import 'package:nimeflix/routes.dart';
 
 class GenreList extends StatefulWidget {
   GenreList({Key key}) : super(key: key);
@@ -37,33 +38,36 @@ class _GenreListState extends State<GenreList> {
                   physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (context,i){
                     final _item = _data[i];
-                    return Stack(
-                      children: [
-                        Container(
-                          width: 180,
-                          height: MediaQuery.of(context).size.height,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(color: Colors.white,width: 1),
-                              image: DecorationImage(
-                                  image: NetworkImage(_item.imageLink == 'https://cdn.myanimelist.net/images/anime/5/65187.webp'?'https://cdn.myanimelist.net/images/anime/1331/111940.jpg':_item.imageLink),
-                                  fit: BoxFit.cover
-                              )
+                    return GestureDetector(
+                      onTap: ()=>Navigator.pushNamed(context, rAnimeByGenre,arguments: _item.id),
+                      child: Stack(
+                        children: [
+                          Container(
+                            width: 180,
+                            height: MediaQuery.of(context).size.height,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(color: Colors.white,width: 1),
+                                image: DecorationImage(
+                                    image: NetworkImage(_item.imageLink == 'https://cdn.myanimelist.net/images/anime/5/65187.webp'?'https://cdn.myanimelist.net/images/anime/1331/111940.jpg':_item.imageLink),
+                                    fit: BoxFit.cover
+                                )
+                            ),
                           ),
-                        ),
-                        Container(
-                          width: 180,
-                          height: MediaQuery.of(context).size.height,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              color: Colors.black.withOpacity(0.6)
+                          Container(
+                            width: 180,
+                            height: MediaQuery.of(context).size.height,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: Colors.black.withOpacity(0.6)
+                            ),
                           ),
-                        ),
-                        Align(
-                          alignment: Alignment.center,
-                          child: Text(_item.genreName,style: TextStyle(fontWeight: FontWeight.bold),),
-                        )
-                      ],
+                          Align(
+                            alignment: Alignment.center,
+                            child: Text(_item.genreName,style: TextStyle(fontWeight: FontWeight.bold),),
+                          )
+                        ],
+                      ),
                     );
                   },
                 );

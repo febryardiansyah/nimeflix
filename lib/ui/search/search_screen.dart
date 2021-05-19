@@ -67,6 +67,10 @@ class _SearchScreenState extends State<SearchScreen> {
                       child: Column(
                         children: [
                           Text('Hasil pencarian : ${_query.text}',style: TextStyle(fontStyle: FontStyle.italic),),
+                          _data.length == 0?Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text('Tidak ditemukan'),
+                          ):Center(),
                           ListView.separated(
                             itemCount: _data.length,
                             padding: EdgeInsets.only(top: 15),

@@ -1,62 +1,66 @@
-class SearchResultModel {
-  SearchResultModel({
-    this.thumb,
-    this.title,
+class AnimeByGenreModel {
+  AnimeByGenreModel({
+    this.animeName,
     this.link,
     this.id,
-    this.status,
+    this.studio,
+    this.episode,
     this.score,
+    this.releaseDate,
     this.genreList,
   });
 
-  String thumb;
-  String title;
+  String animeName;
   String link;
   String id;
-  String status;
+  String studio;
+  String episode;
   num score;
+  String releaseDate;
   List<GenreList> genreList;
 
-  factory SearchResultModel.fromJson(Map<String, dynamic> json) => SearchResultModel(
-    thumb: json["thumb"],
-    title: json["title"],
+  factory AnimeByGenreModel.fromJson(Map<String, dynamic> json) => AnimeByGenreModel(
+    animeName: json["anime_name"],
     link: json["link"],
     id: json["id"],
-    status: json["status"],
+    studio: json["studio"],
+    episode: json["episode"],
     score: json["score"],
+    releaseDate: json["release_date"],
     genreList: List<GenreList>.from(json["genre_list"].map((x) => GenreList.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
-    "thumb": thumb,
-    "title": title,
+    "anime_name": animeName,
     "link": link,
     "id": id,
-    "status": status,
+    "studio": studio,
+    "episode": episode,
     "score": score,
+    "release_date": releaseDate,
     "genre_list": List<dynamic>.from(genreList.map((x) => x.toJson())),
   };
 }
 
 class GenreList {
   GenreList({
-    this.genreTitle,
+    this.genreName,
     this.genreLink,
     this.genreId,
   });
 
-  String genreTitle;
+  String genreName;
   String genreLink;
   String genreId;
 
   factory GenreList.fromJson(Map<String, dynamic> json) => GenreList(
-    genreTitle: json["genre_title"],
+    genreName: json["genre_name"],
     genreLink: json["genre_link"],
     genreId: json["genre_id"],
   );
 
   Map<String, dynamic> toJson() => {
-    "genre_title": genreTitle,
+    "genre_name": genreName,
     "genre_link": genreLink,
     "genre_id": genreId,
   };

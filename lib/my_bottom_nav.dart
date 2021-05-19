@@ -1,6 +1,7 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:nimeflix/ui/home_screen/home_screen.dart';
+import 'package:nimeflix/ui/more/more_screen.dart';
 import 'package:nimeflix/ui/schedule/schedule_screen.dart';
 import 'package:nimeflix/ui/search/search_screen.dart';
 import 'package:nimeflix/ui/watch_later/watch_later_screen.dart';
@@ -18,7 +19,7 @@ class _MyBottomNavState extends State<MyBottomNav> {
     HomeScreen(),
     SearchScreen(),
     WatchLaterScreen(),
-    HomeScreen(),
+    MoreScreen(),
   ];
   @override
   Widget build(BuildContext context) {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
+import 'package:nimeflix/bloc/get_anime_by_genre/get_anime_by_genre_cubit.dart';
 import 'package:nimeflix/bloc/get_batch_anime/get_batch_anime_cubit.dart';
 import 'package:nimeflix/bloc/get_complete_anime/get_complete_anime_cubit.dart';
 import 'package:nimeflix/bloc/get_detail_anime/get_detail_anime_cubit.dart';
@@ -55,6 +56,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => GetOngoingAnimeCubit(),
+        ),
+        BlocProvider(
+          create: (_) => GetAnimeByGenreCubit(),
         ),
       ],
       child: MaterialApp(

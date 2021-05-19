@@ -28,13 +28,20 @@ class MainRepo extends BaseService{
 
   Future<Response> getComplete({int page})async{
     final _res = await request(endpoint: 'complete/page/$page');
-    print(_res.data['animeList'][0]['title']);
+    // print(_res.data['animeList'][0]['title']);
     return _res;
   }
 
-  Future<Response> getOngoing()async{
-    final _res = await request(endpoint: 'ongoing');
-    print(_res.data['animeList'][0]['title']);
+  Future<Response> getOngoing({int page})async{
+    final _res = await request(endpoint: 'ongoing/page/$page');
+    // print(_res.data['animeList'][0]['title']);
     return _res;
   }
+
+  Future<Response> getAnimeByGenre({String id,int page})async{
+    final _res = await request(endpoint: 'genres/$id/page/$page');
+    print(_res.data);
+    return _res;
+  }
+
 }
