@@ -7,6 +7,9 @@ import 'package:nimeflix/ui/detail/watch_anime_screen.dart';
 import 'package:nimeflix/ui/more/anime_by_genre_screen.dart';
 import 'package:nimeflix/ui/more/more_complete_anime_screen.dart';
 import 'package:nimeflix/ui/more/more_ongoing_anime_screen.dart';
+import 'package:nimeflix/ui/more/more_screen_children/about_app_screen.dart';
+import 'package:nimeflix/ui/more/more_screen_children/privacy_policy_screen.dart';
+import 'package:nimeflix/ui/more/more_screen_children/tos_screen.dart';
 import 'package:nimeflix/ui/schedule/schedule_screen.dart';
 
 
@@ -43,6 +46,15 @@ Route generateRoute(RouteSettings settings){
     case rAnimeByGenre:
       _route = _pageRoute(body: AnimeByGenreScreen(id: _args,),settings: settings);
       break;
+    case rPrivacyPolicy:
+      _route = _pageRoute(body: PrivacyPolicyScreen(),settings: settings);
+      break;
+    case rTOS:
+      _route = _pageRoute(body: TosScreen(),settings: settings);
+      break;
+    case rAboutApp:
+      _route = _pageRoute(body: AboutAppScreen(),settings: settings);
+      break;
   }
   return _route;
 }
@@ -56,3 +68,6 @@ const String rSchedule = '/schedule';
 const String rMoreCompleteAnime = '/moreCompleteAnime';
 const String rMoreOngoingAnime = '/moreOngoingAnime';
 const String rAnimeByGenre = '/animeByGenre';
+const String rPrivacyPolicy = '/privacyPolicy';
+const String rTOS = '/tos';
+const String rAboutApp = '/aboutApp';

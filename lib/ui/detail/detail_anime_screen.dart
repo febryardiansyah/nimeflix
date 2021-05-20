@@ -40,12 +40,12 @@ class _DetailAnimeScreenState extends State<DetailAnimeScreen> {
     });
     for(int i = 0;i<_saveForLaterBox.length;i++){
       _saveForLaterModel = _saveForLaterBox.getAt(i);
-      print('from db :${_saveForLaterModel.endpoint}');
-      print('id :${widget.id}');
       if (_saveForLaterModel.endpoint == widget.id.replaceAll('/', '')) {
         setState(() {
           _isAnimeSaved = true;
         });
+        print('from db :${_saveForLaterModel.endpoint}');
+        print('id :${widget.id}');
         break;
       }
       else{
@@ -56,12 +56,12 @@ class _DetailAnimeScreenState extends State<DetailAnimeScreen> {
     }
   }
   void _checkLatestEpisode(){
-    if (_latestEpisodeBox.length == 0) {
-      print('latest episode null');
-    }
+    // if (_latestEpisodeBox.length == 0) {
+    //   print('latest episode null');
+    // }
     for(int i=0;i<_latestEpisodeBox.length;i++){
       LatestEpisodeModel _data = _latestEpisodeBox.getAt(i);
-      if (_data.animeEndpoint == widget.id) {
+      if (_data.animeEndpoint == widget.id.replaceAll('/', '')) {
         setState(() {
           _idxLastEps = _data.lastEpisode;
           _episode = _data.episodeTitle;
@@ -327,7 +327,7 @@ class _DetailAnimeScreenState extends State<DetailAnimeScreen> {
                           child: GestureDetector(
                             onTap: (){
                               final _res = LatestEpisodeModel(
-                                animeEndpoint: widget.id,
+                                animeEndpoint: _animeEndpoint,
                                 episodeEndpoint: _item.id,
                                 episodeTitle: _item.title,
                                 lastEpisode: i
@@ -336,22 +336,20 @@ class _DetailAnimeScreenState extends State<DetailAnimeScreen> {
                                 _idxLastEps = i;
                                 _episode = _item.title;
                               });
-                              // _latestEpisodeBox.deleteFromDisk();
-                              if (_latestEpisodeBox.length == 0) {
-                                _latestEpisodeBox.add(_res);
-                              } else{
-                                for(int j = 0;j<_latestEpisodeBox.length;j++){
-                                  LatestEpisodeModel _lastModel = _latestEpisodeBox.getAt(i);
-                                  if (_lastModel.animeEndpoint == widget.id) {
-                                    _latestEpisodeBox.putAt(j,_res);
-                                    break;
-                                  }else{
-                                    _latestEpisodeBox.add(_res);
-                                    break;
-                                  }
-                                }
-                              }
-                              // Navigator.pushNamed(context, rWatchAnime,arguments: _item.id);
+                              // _latestEpisodeBox.clear();
+                              print('length => ${_latestEpisodeBox.length}');
+                              _latestEpisodeBox.add(_res);
+                              // for(int j = 0;j<_latestEpisodeBox.length;j++){
+                              //   LatestEpisodeModel _lastModel = _latestEpisodeBox.getAt(i);
+                              //   if (_lastModel.animeEndpoint == _animeEndpoint) {
+                              //     _latestEpisodeBox.putAt(j,_res);
+                              //     setState(() {
+                              //       _isExist = true;
+                              //     });
+                              //     break;
+                              //   }
+                              // }
+                              Navigator.pushNamed(context, rWatchAnime,arguments: _item.id);
                             },
                             child: Container(
                               padding: EdgeInsets.all(8),

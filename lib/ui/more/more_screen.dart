@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nimeflix/constants/BaseConstants.dart';
 
+import '../../routes.dart';
+
 class MoreScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -36,28 +38,37 @@ class MoreScreen extends StatelessWidget {
                 shrinkWrap: true,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,mainAxisSpacing: 7,crossAxisSpacing: 7,childAspectRatio: 4),
                 children: [
-                  Container(
-                    child: Center(child: Text('About app'),),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: Colors.transparent,
-                      border: Border.all(color: Colors.orange)
-                    ),
-                  ),
-                  Container(
-                    child: Center(child: Text('Privacy Policy'),),
-                    decoration: BoxDecoration(
+                  GestureDetector(
+                    onTap: ()=>Navigator.pushNamed(context, rAboutApp),
+                    child: Container(
+                      child: Center(child: Text('About app'),),
+                      decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
                         color: Colors.transparent,
                         border: Border.all(color: Colors.orange)
+                      ),
                     ),
                   ),
-                  Container(
-                    child: Center(child: Text('Terms & Conditions'),),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        color: Colors.transparent,
-                        border: Border.all(color: Colors.orange)
+                  GestureDetector(
+                    onTap: ()=>Navigator.pushNamed(context, rPrivacyPolicy),
+                    child: Container(
+                      child: Center(child: Text('Privacy Policy'),),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: Colors.transparent,
+                          border: Border.all(color: Colors.orange)
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: ()=>Navigator.pushNamed(context, rTOS),
+                    child: Container(
+                      child: Center(child: Text('Terms & Conditions'),),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: Colors.transparent,
+                          border: Border.all(color: Colors.orange)
+                      ),
                     ),
                   ),
                 ],
