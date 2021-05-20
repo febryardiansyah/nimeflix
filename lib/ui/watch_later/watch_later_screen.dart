@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:nimeflix/constants/BaseConstants.dart';
+import 'package:nimeflix/routes.dart';
 import 'package:nimeflix/utils/hive_database/save_for_later_model.dart';
 
 class WatchLaterScreen extends StatefulWidget {
@@ -51,6 +52,9 @@ class _WatchLaterScreenState extends State<WatchLaterScreen> {
           itemBuilder: (context,i){
             SaveForLaterModel _item = _box.getAt(i);
             return ListTile(
+              onTap: (){
+                Navigator.pushNamed(context, rDetailAnime,arguments: _item.endpoint);
+              },
               leading: Image.network(_item.thumb,fit: BoxFit.cover,),
               title: Text(_item.title.length > 30?'${_item.title.substring(0,30)}..':_item.title,style: TextStyle(fontWeight: FontWeight.bold),),
               subtitle: Text(_item.status),

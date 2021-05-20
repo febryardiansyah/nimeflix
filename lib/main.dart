@@ -12,6 +12,7 @@ import 'package:nimeflix/bloc/get_ongoing_anime/get_ongoing_anime_cubit.dart';
 import 'package:nimeflix/bloc/get_schedule/get_schedule_cubit.dart';
 import 'package:nimeflix/bloc/search_anime/search_anime_cubit.dart';
 import 'package:nimeflix/constants/BaseConstants.dart';
+import 'package:nimeflix/utils/hive_database/latest_episode_model.dart';
 import 'package:nimeflix/utils/hive_database/save_for_later_model.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 
@@ -24,7 +25,9 @@ void main() async{
   final _dir = await path_provider.getApplicationDocumentsDirectory();
   Hive.init(_dir.path);
   Hive.openBox(BaseConstants.hSaveForLater);
+  Hive.openBox(BaseConstants.hLatestEpisode);
   Hive.registerAdapter(SaveForLaterModelAdapter());
+  Hive.registerAdapter(LatestEpisodeModelAdapter());
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitDown,DeviceOrientation.portraitUp])
   .then((value) => runApp(MyApp()));
 }

@@ -4,4 +4,5 @@ class BaseConstants{
   static String baseUrl = 'https://anime.rifkiystark.tech/api/';
   static String errorMessage = 'Terjadi kesalahan, silahkan coba lagi';
   static String hSaveForLater = 'SaveForLater';
+  static String hLatestEpisode = 'LatestEpisode';
 }

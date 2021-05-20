@@ -2,7 +2,7 @@ import 'package:hive/hive.dart';
 
 part 'save_for_later_model.g.dart';
 
-@HiveType()
+@HiveType(typeId: 0)
 class SaveForLaterModel{
   @HiveField(0)
   final String endpoint;

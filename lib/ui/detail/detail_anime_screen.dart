@@ -6,9 +6,11 @@ import 'package:nimeflix/bloc/get_detail_anime/get_detail_anime_cubit.dart';
 import 'package:nimeflix/constants/BaseConstants.dart';
 import 'package:nimeflix/routes.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nimeflix/utils/hive_database/latest_episode_model.dart';
 import 'package:nimeflix/utils/hive_database/save_for_later_model.dart';
 import 'package:nimeflix/widgets/my_loading_screen.dart';
 import 'package:nimeflix/widgets/reconnect_button.dart';
+import 'package:toast/toast.dart';
 
 class DetailAnimeScreen extends StatefulWidget {
   final String id;
@@ -26,8 +28,16 @@ class _DetailAnimeScreenState extends State<DetailAnimeScreen> {
   final _saveForLaterBox = Hive.box(BaseConstants.hSaveForLater);
   bool _isAnimeSaved = false;
   SaveForLaterModel _saveForLaterModel;
+  String _animeEndpoint = '';
+
+  final _latestEpisodeBox = Hive.box(BaseConstants.hLatestEpisode);
+  String _episode = '';
+  int _idxLastEps;
 
   void _checkIsSaved(){
+    setState(() {
+      _animeEndpoint = widget.id.replaceAll('/', '');
+    });
     for(int i = 0;i<_saveForLaterBox.length;i++){
       _saveForLaterModel = _saveForLaterBox.getAt(i);
       print('from db :${_saveForLaterModel.endpoint}');
@@ -45,12 +55,26 @@ class _DetailAnimeScreenState extends State<DetailAnimeScreen> {
       }
     }
   }
-
+  void _checkLatestEpisode(){
+    if (_latestEpisodeBox.length == 0) {
+      print('latest episode null');
+    }
+    for(int i=0;i<_latestEpisodeBox.length;i++){
+      LatestEpisodeModel _data = _latestEpisodeBox.getAt(i);
+      if (_data.animeEndpoint == widget.id) {
+        setState(() {
+          _idxLastEps = _data.lastEpisode;
+          _episode = _data.episodeTitle;
+        });
+      }
+    }
+  }
   @override
   void initState() {
     super.initState();
     context.read<GetDetailAnimeCubit>().fetchDetailAnime(id: widget.id);
     _checkIsSaved();
+    _checkLatestEpisode();
   }
 
   @override
@@ -110,10 +134,33 @@ class _DetailAnimeScreenState extends State<DetailAnimeScreen> {
                               final res = SaveForLaterModel(
                                 title: _data.title,endpoint: _data.animeId,status: _data.status,thumb: _data.thumb
                               );
-                              setState(() {
-                                _isAnimeSaved = true;
-                              });
-                              _saveForLaterBox.add(res);
+                              if (save.length == 0) {
+                                setState(() {
+                                  _isAnimeSaved = true;
+                                });
+                                save.add(res);
+                                Toast.show("Berhasil disimpan", context, duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
+                              }else{
+                                if (_isAnimeSaved) {
+                                  for(int i = 0;i<save.length;i++){
+                                    SaveForLaterModel _item = save.getAt(i);
+                                    if (_item.endpoint == widget.id.replaceAll('/', '')) {
+                                      save.deleteAt(i);
+                                    }
+                                  }
+                                  setState(() {
+                                    _isAnimeSaved = false;
+                                  });
+                                  Toast.show("Berhasil dihapus", context, duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
+                                } else{
+                                  setState(() {
+                                    _isAnimeSaved = true;
+                                  });
+                                  save.add(res);
+                                  Toast.show("Berhasil disimpan", context, duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
+                                }
+
+                              }
                             },
                             child: CircleAvatar(
                               backgroundColor: Colors.black.withOpacity(0.6),
@@ -262,15 +309,16 @@ class _DetailAnimeScreenState extends State<DetailAnimeScreen> {
                       ],
                     ),
                   ),
+                  _episode != ''?Padding(
+                    padding: EdgeInsets.all(8),
+                    child: Center(child: Text('Episode terakhir yang ditonton :\n${_episode.replaceAll(_data.title, '').replaceAll('Subtitle Indonesia', '').trim()}',textAlign: TextAlign.center,)),
+                  ):Center(),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10),
                     child: ListView.builder(
                       itemCount: _data.episodeList.length,
                       shrinkWrap: true,
                       reverse: _isEpsReversed,
-                      // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      //     crossAxisCount: 3,crossAxisSpacing: 5,mainAxisSpacing: 5,childAspectRatio: 2
-                      // ),
                       physics: ClampingScrollPhysics(),
                       itemBuilder: (context,i){
                         final _item = _data.episodeList[i];
@@ -278,13 +326,38 @@ class _DetailAnimeScreenState extends State<DetailAnimeScreen> {
                           padding: EdgeInsets.only(bottom: 8),
                           child: GestureDetector(
                             onTap: (){
-                              Navigator.pushNamed(context, rWatchAnime,arguments: _item.id);
+                              final _res = LatestEpisodeModel(
+                                animeEndpoint: widget.id,
+                                episodeEndpoint: _item.id,
+                                episodeTitle: _item.title,
+                                lastEpisode: i
+                              );
+                              setState(() {
+                                _idxLastEps = i;
+                                _episode = _item.title;
+                              });
+                              // _latestEpisodeBox.deleteFromDisk();
+                              if (_latestEpisodeBox.length == 0) {
+                                _latestEpisodeBox.add(_res);
+                              } else{
+                                for(int j = 0;j<_latestEpisodeBox.length;j++){
+                                  LatestEpisodeModel _lastModel = _latestEpisodeBox.getAt(i);
+                                  if (_lastModel.animeEndpoint == widget.id) {
+                                    _latestEpisodeBox.putAt(j,_res);
+                                    break;
+                                  }else{
+                                    _latestEpisodeBox.add(_res);
+                                    break;
+                                  }
+                                }
+                              }
+                              // Navigator.pushNamed(context, rWatchAnime,arguments: _item.id);
                             },
                             child: Container(
                               padding: EdgeInsets.all(8),
                               child: Center(child: Text(_item.title.replaceAll(_data.title, '').replaceAll('Subtitle Indonesia', '').trim(),textAlign: TextAlign.center,)),
                               decoration: BoxDecoration(
-                                  color: i == 2?Colors.red:Colors.transparent,
+                                  color: _idxLastEps == i?Colors.red:Colors.transparent,
                                   borderRadius: BorderRadius.circular(8),
                                   border: Border.all(width: 1,color: Colors.orange)
                               ),
