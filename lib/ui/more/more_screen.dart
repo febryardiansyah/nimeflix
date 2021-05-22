@@ -78,7 +78,7 @@ class MoreScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(bottom: 20),
               child: Center(
-                child: Text('dikembangkan oleh Febry ardiansyah',style: TextStyle(color: Colors.grey),),
+                child: Text('dikembangkan oleh Febry Ardiansyah',style: TextStyle(color: Colors.grey),),
               ),
             )
           ],

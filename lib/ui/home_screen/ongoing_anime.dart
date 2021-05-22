@@ -66,7 +66,10 @@ class OngoingAnime extends StatelessWidget {
                               Container(
                                 padding: EdgeInsets.all(8),
                                 child: Text(_item.episode,style: TextStyle(color: Colors.white,),),
-                                color: Colors.red,
+                                decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
                               ),
                               Align(
                                 alignment: Alignment.bottomCenter,
@@ -75,7 +78,10 @@ class OngoingAnime extends StatelessWidget {
                                   height: 30,
                                   padding: EdgeInsets.all(8),
                                   child: Center(child: Text(_item.title,style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),textAlign: TextAlign.center,),),
-                                  color: Colors.black.withOpacity(0.7),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: Colors.black.withOpacity(0.7),
+                                  ),
                                 ),
                               )
                             ],

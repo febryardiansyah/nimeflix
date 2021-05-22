@@ -70,6 +70,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
+        title: 'Nimeflix',
         theme: ThemeData.dark(),
         initialRoute: rBottomNav,
         onGenerateRoute: generateRoute,

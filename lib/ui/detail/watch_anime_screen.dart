@@ -45,13 +45,16 @@ class _WatchAnimeScreenState extends State<WatchAnimeScreen> {
                   flickManager: _flickManager,
                 ),
               ),
-              FlatButton(
-                child: Text('Back'),
-                color: Colors.orange,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                onPressed: (){
-                  Navigator.pop(context);
-                },
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: FlatButton(
+                  child: Text('Back'),
+                  color: Colors.orange,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                  onPressed: (){
+                    Navigator.pop(context);
+                  },
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
