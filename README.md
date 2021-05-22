@@ -5,7 +5,7 @@
 
 <center>An android application to streaming and download anime with indonesian subtitle</center>
 
-<h3><center><a href="#">Download (comming soon)</center></h3>
+<h3><center><a href="#">Download (comming soon)</a></center></h3>
 
 ### Screenshots
 | Home |  Search| More
