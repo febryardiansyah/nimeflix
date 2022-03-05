@@ -5,6 +5,9 @@ class EpisodeModel {
     this.id,
     this.linkStream,
     this.quality,
+    this.mirror1,
+    this.mirror2,
+    this.mirror3,
   });
 
   String title;
@@ -12,6 +15,9 @@ class EpisodeModel {
   String id;
   String linkStream;
   EpisodeQualityModel quality;
+  MirrorQuality mirror1;
+  MirrorQuality mirror2;
+  MirrorQuality mirror3;
 
   factory EpisodeModel.fromJson(Map<String, dynamic> json) => EpisodeModel(
     title: json["title"],
@@ -19,6 +25,9 @@ class EpisodeModel {
     id: json["id"],
     linkStream: json["link_stream"],
     quality: EpisodeQualityModel.fromJson(json["quality"]),
+    mirror1: MirrorQuality.fromJson(json['mirror1']),
+    mirror2: MirrorQuality.fromJson(json['mirror2']),
+    mirror3: MirrorQuality.fromJson(json['mirror3'])
   );
 
   Map<String, dynamic> toJson() => {
@@ -28,6 +37,34 @@ class EpisodeModel {
     "link_stream": linkStream,
     "quality": quality.toJson(),
   };
+}
+
+class MirrorQuality{
+  String quality;
+  List<MirrorList> mirrorList;
+
+  MirrorQuality({this.quality, this.mirrorList});
+
+  factory MirrorQuality.fromJson(Map<String,dynamic>json){
+    return MirrorQuality(
+      quality: json['quality'],
+      mirrorList: List<MirrorList>.from(json['mirrorList'].map((json)=>MirrorList.fromJson(json)))
+    );
+  }
+}
+
+class MirrorList{
+  String id;
+  String host;
+
+  MirrorList({this.id, this.host});
+
+  factory MirrorList.fromJson(Map<String,dynamic>json){
+    return MirrorList(
+      id: json['id'],
+      host: json['host']
+    );
+  }
 }
 
 class EpisodeQualityModel {

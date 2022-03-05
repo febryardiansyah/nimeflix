@@ -20,4 +20,12 @@ class AnimeRepo extends BaseService{
     return _res;
   }
 
+  Future<Response> getMirrorStream({String animeId,String mirrorId})async{
+    final _res = await request(endpoint: 'eps/$animeId/mirror',data: FormData.fromMap({
+      "mirrorId":mirrorId,
+    }),requestType: RequestType.POST);
+    print(_res.data);
+    return _res;
+  }
+
 }

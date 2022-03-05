@@ -1,9 +1,8 @@
 import 'package:better_player/better_player.dart';
-import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:nimeflix/models/episode_model.dart';
+import 'package:nimeflix/routes.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:video_player/video_player.dart';
 
 class WatchAnimeScreen extends StatefulWidget {
   final EpisodeModel data;
@@ -15,18 +14,50 @@ class WatchAnimeScreen extends StatefulWidget {
 }
 
 class _WatchAnimeScreenState extends State<WatchAnimeScreen> {
-  FlickManager _flickManager;
   Size _size;
+  // final _durationBox = Hive.box(BaseConstants.hLatestDurationWatched);
+  String _currentDuration = '0:00:0.000000';
+
+  BetterPlayerController _betterPlayerController;
+  BetterPlayerDataSource _betterPlayerDataSource;
+
+  // Future<void> _checkLastDuration()async{
+  //   for(int i = 0;i<_durationBox.length;i++){
+  //     LatestDurationWatchedModel _data = _durationBox.get(i);
+  //     if (_data.endpoint == widget.data.id) {
+  //       print('Duration from DB ${_data.duration}');
+  //       setState(() {
+  //         _currentDuration = _data.duration;
+  //       });
+  //     }
+  //   }
+  // }
 
   @override
   void initState() {
     super.initState();
-    _flickManager = FlickManager(videoPlayerController: VideoPlayerController.network(widget.data.linkStream),autoPlay: true);
+    // _checkLastDuration();
+    BetterPlayerConfiguration betterPlayerConfiguration = BetterPlayerConfiguration(
+      aspectRatio: 16/9,fit: BoxFit.contain,autoPlay: false,allowedScreenSleep: false,
+    //   eventListener: (BetterPlayerEvent event)async{
+    //   if(event.betterPlayerEventType == BetterPlayerEventType.progress){
+    //     print('Duration : ${event.parameters['progress'] as Duration}');
+    //     final _data = LatestDurationWatchedModel(
+    //         endpoint: widget.data.id,duration: event.parameters['progress'].toString()
+    //     );
+    //     _durationBox.add(_data);
+    //   }
+    // },
+      errorBuilder: (context,err)=>Center(child: Text('Video tidak dapat dimainkan, silahkan coba alternatif dibawah',textAlign: TextAlign.center,)),
+      // startAt: Helpers.parseDuration(_currentDuration),
+    );
+    _betterPlayerDataSource = BetterPlayerDataSource(BetterPlayerDataSourceType.network, widget.data.linkStream,);
+    _betterPlayerController = BetterPlayerController(betterPlayerConfiguration);
+    _betterPlayerController.setupDataSource(_betterPlayerDataSource);
   }
-
   @override
   void dispose() {
-    _flickManager.dispose();
+    _betterPlayerController?.dispose();
     super.dispose();
   }
 
@@ -39,10 +70,13 @@ class _WatchAnimeScreenState extends State<WatchAnimeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              AspectRatio(
-                aspectRatio: 16/9,
-                child: FlickVideoPlayer(
-                  flickManager: _flickManager,
+              BetterPlayerMultipleGestureDetector(
+                onTap: (){
+
+                },
+                child: AspectRatio(
+                  aspectRatio: 16/9,
+                  child: BetterPlayer(controller: _betterPlayerController),
                 ),
               ),
               Padding(
@@ -66,7 +100,7 @@ class _WatchAnimeScreenState extends State<WatchAnimeScreen> {
                   onPressed: null,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text('Note : Jika streaming tidak bisa, silahkan download episode ini dibawah',style: TextStyle(color: Colors.red),),
+                    child: Text('Note : Jika streaming diatas tidak bisa, silahkan ganti streaming atau download episode ini dibawah',style: TextStyle(color: Colors.red),),
                   ),
                   color: Colors.transparent,
                   shape: RoundedRectangleBorder(
@@ -75,6 +109,79 @@ class _WatchAnimeScreenState extends State<WatchAnimeScreen> {
                   ),
                 ),
               ),
+              Padding(
+                padding: EdgeInsets.all(8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Pilih kualitas video lainnya'),
+                    SizedBox(height: 10,),
+                    Container(
+                      margin: EdgeInsets.only(bottom: 8),
+                      decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.5),
+                        borderRadius: BorderRadius.circular(8)
+                      ),
+                      child: ExpansionTile(
+                        leading: Icon(Icons.tv_rounded),
+                        title: Text(widget.data.mirror1.quality),
+                        children: widget.data.mirror1.mirrorList.map((e){
+                          return ListTile(
+                            leading: Text((widget.data.mirror1.mirrorList.indexOf(e)+1).toString()),
+                            title: Text(e.host),
+                            trailing: Icon(Icons.arrow_forward_ios),
+                            onTap: ()async{
+                              Navigator.pushNamed(context, rMirrorStreaming,arguments: MirrorList(id: e.id,host: widget.data.id));
+                            },
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(bottom: 8),
+                      decoration: BoxDecoration(
+                          color: Colors.blue.withOpacity(0.5),
+                          borderRadius: BorderRadius.circular(8)
+                      ),
+                      child: ExpansionTile(
+                        leading: Icon(Icons.tv_rounded),
+                        title: Text(widget.data.mirror2.quality),
+                        children: widget.data.mirror2.mirrorList.map((e){
+                          return ListTile(
+                            leading: Text((widget.data.mirror2.mirrorList.indexOf(e)+1).toString()),
+                            title: Text(e.host),
+                            trailing: Icon(Icons.arrow_forward_ios),
+                            onTap: (){
+                              Navigator.pushNamed(context, rMirrorStreaming,arguments: MirrorList(id: e.id,host: widget.data.id));
+                            },
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                          color: Colors.red.withOpacity(0.5),
+                          borderRadius: BorderRadius.circular(8)
+                      ),
+                      child: ExpansionTile(
+                        leading: Icon(Icons.tv_rounded),
+                        title: Text(widget.data.mirror3.quality),
+                        children: widget.data.mirror3.mirrorList.map((e){
+                          return ListTile(
+                            leading: Text((widget.data.mirror3.mirrorList.indexOf(e)+1).toString()),
+                            title: Text(e.host),
+                            trailing: Icon(Icons.arrow_forward_ios),
+                            onTap: (){
+                              Navigator.pushNamed(context, rMirrorStreaming,arguments: MirrorList(id: e.id,host: widget.data.id));
+                            },
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Divider(),
               Padding(
                 padding: EdgeInsets.only(left: 10,right: 10,top: 20),
                 child: Column(

@@ -23,6 +23,8 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Jadwal Rilis'),
+        elevation: 0,
+        actions: [IconButton(onPressed: ()=>Navigator.pushNamed(context, rSearch), icon: Icon(Icons.search))],
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),

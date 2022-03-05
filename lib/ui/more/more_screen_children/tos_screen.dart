@@ -11,9 +11,9 @@ class TosScreen extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Html(
-          onLinkTap: (val)async{
-            await launch(val);
-          },
+          // onLinkTap: (val)async{
+          //   await launch(val);
+          // },
           data: '''<!DOCTYPE html>
     <html>
     <head>

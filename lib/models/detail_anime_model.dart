@@ -23,7 +23,7 @@ class DetailAnimeModel {
   String synopsis;
   String title;
   String japanase;
-  double score;
+  num score;
   String producer;
   String type;
   String status;

@@ -29,6 +29,5 @@ class GetOngoingAnimeFailure extends GetOngoingAnimeState {
 
   GetOngoingAnimeFailure({this.msg});
   @override
-  // TODO: implement props
   List<Object> get props => [msg];
 }

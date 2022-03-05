@@ -19,6 +19,8 @@ class _WatchLaterScreenState extends State<WatchLaterScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Tonton nanti'),
+        elevation: 0,
+        actions: [IconButton(onPressed: ()=>Navigator.pushNamed(context, rSearch), icon: Icon(Icons.search))],
       ),
       body: Padding(
         padding: EdgeInsets.all(8),

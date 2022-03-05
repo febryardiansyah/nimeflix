@@ -3,14 +3,19 @@ import 'package:nimeflix/my_bottom_nav.dart';
 import 'package:nimeflix/ui/detail/batch_anime_screen.dart';
 import 'package:nimeflix/ui/detail/detail_anime_screen.dart';
 import 'package:nimeflix/ui/detail/index_watch_anime.dart';
+import 'package:nimeflix/ui/detail/mirror_stream_screen.dart';
 import 'package:nimeflix/ui/detail/watch_anime_screen.dart';
 import 'package:nimeflix/ui/more/anime_by_genre_screen.dart';
 import 'package:nimeflix/ui/more/more_complete_anime_screen.dart';
+import 'package:nimeflix/ui/more/more_history_anime.dart';
 import 'package:nimeflix/ui/more/more_ongoing_anime_screen.dart';
 import 'package:nimeflix/ui/more/more_screen_children/about_app_screen.dart';
+import 'package:nimeflix/ui/more/more_screen_children/history_screen.dart';
 import 'package:nimeflix/ui/more/more_screen_children/privacy_policy_screen.dart';
 import 'package:nimeflix/ui/more/more_screen_children/tos_screen.dart';
 import 'package:nimeflix/ui/schedule/schedule_screen.dart';
+import 'package:nimeflix/ui/search/search_result_screen.dart';
+import 'package:nimeflix/ui/search/search_screen.dart';
 
 
 MaterialPageRoute _pageRoute ({RouteSettings settings, Widget body})=>MaterialPageRoute(
@@ -55,6 +60,18 @@ Route generateRoute(RouteSettings settings){
     case rAboutApp:
       _route = _pageRoute(body: AboutAppScreen(),settings: settings);
       break;
+    case rMirrorStreaming:
+      _route = _pageRoute(body: MirrorStreamScreen(data: _args,),settings: settings);
+      break;
+    case rSearch:
+      _route = _pageRoute(body: SearchScreen(),settings: settings);
+      break;
+    case rSearchResult:
+      _route = _pageRoute(body: SearchResultScreen(query: _args,),settings: settings);
+      break;
+    case rHistoryAnime:
+      _route = _pageRoute(body: MoreHistoryAnimeScreen(),settings: settings);
+      break;
   }
   return _route;
 }
@@ -71,3 +88,7 @@ const String rAnimeByGenre = '/animeByGenre';
 const String rPrivacyPolicy = '/privacyPolicy';
 const String rTOS = '/tos';
 const String rAboutApp = '/aboutApp';
+const String rMirrorStreaming = '/mirrorStreaming';
+const String rSearch = '/search';
+const String rSearchResult = '/searchResult';
+const String rHistoryAnime = '/historyAnime';

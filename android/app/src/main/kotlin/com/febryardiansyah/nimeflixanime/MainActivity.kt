@@ -1,4 +1,4 @@
-package com.febryardiansyah.nimeflix
+package com.febryardiansyah.nimeflixanime
 
 import io.flutter.embedding.android.FlutterActivity
 
