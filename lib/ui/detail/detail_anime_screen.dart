@@ -5,9 +5,11 @@ import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:nimeflix/bloc/get_detail_anime/get_detail_anime_cubit.dart';
+import 'package:nimeflix/bloc/latest_eps/latest_eps_cubit.dart';
 import 'package:nimeflix/constants/BaseConstants.dart';
 import 'package:nimeflix/routes.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nimeflix/ui/detail/index_watch_anime.dart';
 import 'package:nimeflix/utils/hive_database/history_anime_model.dart';
 import 'package:nimeflix/utils/hive_database/latest_episode_model.dart';
 import 'package:nimeflix/utils/hive_database/save_for_later_model.dart';
@@ -39,7 +41,7 @@ class _DetailAnimeScreenState extends State<DetailAnimeScreen> {
 
   final _latestEpisodeBox = Hive.box(BaseConstants.hLatestEpisode);
   String _episode = '';
-  int _idxLastEps;
+  int _idxLastEps = 0;
 
   String _epsId = '';
 
@@ -48,7 +50,7 @@ class _DetailAnimeScreenState extends State<DetailAnimeScreen> {
 
   void _checkIsSaved(){
     setState(() {
-      _animeEndpoint = widget.id.replaceAll('/', '');
+      _animeEndpoint = widget.id;
     });
     for(int i = 0;i<_saveForLaterBox.length;i++){
       _saveForLaterModel = _saveForLaterBox.getAt(i);
@@ -56,8 +58,6 @@ class _DetailAnimeScreenState extends State<DetailAnimeScreen> {
         setState(() {
           _isAnimeSaved = true;
         });
-        print('from db :${_saveForLaterModel.endpoint}');
-        print('id :${widget.id}');
         break;
       }
       else{
@@ -82,10 +82,13 @@ class _DetailAnimeScreenState extends State<DetailAnimeScreen> {
   void _checkLatestEpisode(){
     for(int i=0;i<_latestEpisodeBox.length;i++){
       LatestEpisodeModel _data = _latestEpisodeBox.getAt(i);
-      if (_data.animeEndpoint == widget.id.replaceAll('/', '')) {
+      print(widget.id);
+      print(_data.animeEndpoint);
+      if (_data.animeEndpoint == widget.id) {
         setState(() {
-          _idxLastEps = _data.lastEpisode;
+          // _idxLastEps = _data.lastEpisode;
           _episode = _data.episodeTitle;
+          _epsId = _data.episodeEndpoint;
         });
       }
     }
@@ -96,48 +99,44 @@ class _DetailAnimeScreenState extends State<DetailAnimeScreen> {
     context.read<GetDetailAnimeCubit>().fetchDetailAnime(id: widget.id);
     _checkIsSaved();
     _checkLatestEpisode();
-    _bannerSize = AdmobBannerSize.BANNER;
-
-  }
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _interstitialAd = AdmobInterstitial(
-        adUnitId: BaseConstants.interstitialAddId,
-        listener: (event,args){
-          print('INTERSTITIAL EVENT ==> $event');
-          if (event == AdmobAdEvent.closed){
-            _interstitialAd.load();
-          }
-        }
-    );
-    _interstitialAd.load();
+    // _bannerSize = AdmobBannerSize.BANNER;
+    // _interstitialAd = AdmobInterstitial(
+    //     adUnitId: BaseConstants.interstitialAddId,
+    //     listener: (event,args){
+    //       print('INTERSTITIAL EVENT ==> $event');
+    //       if (event == AdmobAdEvent.closed){
+    //         _interstitialAd.load();
+    //       }
+    //     }
+    // );
+    // _interstitialAd.load();
   }
   @override
   void dispose() {
-    _interstitialAd.dispose();
+    _interstitialAd?.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     _size = MediaQuery.of(context).size;
-    return WillPopScope(
-      onWillPop: ()async{
-        _interstitialAd.dispose();
-        return true;
-      },
-      child: SafeArea(
-        child: Scaffold(
-          bottomNavigationBar: AdmobBanner(
-            adUnitId: BaseConstants.bannerAddId,
-            adSize: _bannerSize,
-            listener: (AdmobAdEvent event,Map<String,dynamic>args){
-              print('event : $event');
-              print('args : $args');
-            },
-          ),
-          body: BlocBuilder<GetDetailAnimeCubit,GetDetailAnimeState>(
+    return SafeArea(
+      child: Scaffold(
+        // bottomNavigationBar: AdmobBanner(
+        //   adUnitId: BaseConstants.bannerAddId,
+        //   adSize: _bannerSize,
+        //   listener: (AdmobAdEvent event,Map<String,dynamic>args){
+        //     print('event : $event');
+        //     print('args : $args');
+        //   },
+        // ),
+        body: BlocListener<LatestEpsCubit, LatestEpsState>(
+          listener: (context, state) {
+            if (state is LatestEpsSuccess) {
+              _checkLatestEpisode();
+            }
+          },
+          child: BlocBuilder<GetDetailAnimeCubit,GetDetailAnimeState>(
             builder:(context,state) {
               if (state is GetDetailAnimeLoading) {
                 return MyLoadingScreen();
@@ -203,7 +202,7 @@ class _DetailAnimeScreenState extends State<DetailAnimeScreen> {
                               builder:(context,save)=> GestureDetector(
                                 onTap: (){
                                   final res = SaveForLaterModel(
-                                    title: _data.title,endpoint: _data.animeId,status: _data.status,thumb: _data.thumb
+                                      title: _data.title,endpoint: _data.animeId,status: _data.status,thumb: _data.thumb
                                   );
                                   if (save.length == 0) {
                                     setState(() {
@@ -320,9 +319,9 @@ class _DetailAnimeScreenState extends State<DetailAnimeScreen> {
                               margin: EdgeInsets.all(8),
                               child: Center(child: Text(_item.genreName)),
                               decoration: BoxDecoration(
-                                color: Colors.transparent,
-                                border: Border.all(color: Colors.red,width: 1,),
-                                borderRadius: BorderRadius.circular(8)
+                                  color: Colors.transparent,
+                                  border: Border.all(color: Colors.red,width: 1,),
+                                  borderRadius: BorderRadius.circular(8)
                               ),
                             );
                           },
@@ -398,33 +397,34 @@ class _DetailAnimeScreenState extends State<DetailAnimeScreen> {
                               child: GestureDetector(
                                 onTap: ()async{
                                   final _res = LatestEpisodeModel(
-                                    animeEndpoint: _animeEndpoint,
-                                    episodeEndpoint: _item.id,
-                                    episodeTitle: _item.title,
-                                    lastEpisode: i
+                                      animeEndpoint: _animeEndpoint,
+                                      episodeEndpoint: _item.id,
+                                      episodeTitle: _item.title,
+                                      lastEpisode: i
                                   );
                                   setState(() {
                                     _idxLastEps = i;
                                     _episode = _item.title;
                                     _epsId = _item.id;
                                   });
-                                  print('length => ${_latestEpisodeBox.length}');
                                   _latestEpisodeBox.add(_res);
-                                  if (await _interstitialAd.isLoaded) {
-                                    _interstitialAd.show();
-                                  } else {
-                                    print('ads wont loaded');
-                                  }
+                                  // if (await _interstitialAd.isLoaded) {
+                                  //   _interstitialAd.show();
+                                  // } else {
+                                  //   print('ads wont loaded');
+                                  // }
                                   Future.delayed(Duration(seconds: 2),(){
                                     print('this navigation got printed?');
-                                    Navigator.pushNamed(context, rWatchAnime,arguments: _item.id);
+                                    Navigator.pushNamed(context, rWatchAnime,arguments: WatchAnimeParams(
+                                      epsId: _item.id,animeId: widget.id,
+                                    ));
                                   });
                                 },
                                 child: Container(
                                   padding: EdgeInsets.all(8),
                                   child: Center(child: Text(_item.title.replaceAll(_data.title, '').replaceAll('Subtitle Indonesia', '').trim(),textAlign: TextAlign.center,)),
                                   decoration: BoxDecoration(
-                                      color: _idxLastEps == i?Colors.red:Colors.transparent,
+                                      color: _epsId == _item.id?Colors.red:Colors.transparent,
                                       borderRadius: BorderRadius.circular(8),
                                       border: Border.all(width: 1,color: Colors.orange)
                                   ),

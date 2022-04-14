@@ -1,55 +1,39 @@
 import 'package:better_player/better_player.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
+import 'package:nimeflix/bloc/latest_eps/latest_eps_cubit.dart';
 import 'package:nimeflix/models/episode_model.dart';
 import 'package:nimeflix/routes.dart';
+import 'package:nimeflix/ui/detail/index_watch_anime.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../constants/BaseConstants.dart';
+import '../../utils/hive_database/latest_episode_model.dart';
 
 class WatchAnimeScreen extends StatefulWidget {
   final EpisodeModel data;
+  final String animeId;
 
-  const WatchAnimeScreen({Key key, this.data}) : super(key: key);
+  const WatchAnimeScreen({Key key, this.data,this.animeId}) : super(key: key);
 
   @override
   _WatchAnimeScreenState createState() => _WatchAnimeScreenState();
 }
 
 class _WatchAnimeScreenState extends State<WatchAnimeScreen> {
-  Size _size;
-  // final _durationBox = Hive.box(BaseConstants.hLatestDurationWatched);
-  String _currentDuration = '0:00:0.000000';
+
+  final _latestEpisodeBox = Hive.box(BaseConstants.hLatestEpisode);
 
   BetterPlayerController _betterPlayerController;
   BetterPlayerDataSource _betterPlayerDataSource;
 
-  // Future<void> _checkLastDuration()async{
-  //   for(int i = 0;i<_durationBox.length;i++){
-  //     LatestDurationWatchedModel _data = _durationBox.get(i);
-  //     if (_data.endpoint == widget.data.id) {
-  //       print('Duration from DB ${_data.duration}');
-  //       setState(() {
-  //         _currentDuration = _data.duration;
-  //       });
-  //     }
-  //   }
-  // }
-
   @override
   void initState() {
     super.initState();
-    // _checkLastDuration();
     BetterPlayerConfiguration betterPlayerConfiguration = BetterPlayerConfiguration(
       aspectRatio: 16/9,fit: BoxFit.contain,autoPlay: false,allowedScreenSleep: false,
-    //   eventListener: (BetterPlayerEvent event)async{
-    //   if(event.betterPlayerEventType == BetterPlayerEventType.progress){
-    //     print('Duration : ${event.parameters['progress'] as Duration}');
-    //     final _data = LatestDurationWatchedModel(
-    //         endpoint: widget.data.id,duration: event.parameters['progress'].toString()
-    //     );
-    //     _durationBox.add(_data);
-    //   }
-    // },
       errorBuilder: (context,err)=>Center(child: Text('Video tidak dapat dimainkan, silahkan coba alternatif dibawah',textAlign: TextAlign.center,)),
-      // startAt: Helpers.parseDuration(_currentDuration),
     );
     _betterPlayerDataSource = BetterPlayerDataSource(BetterPlayerDataSourceType.network, widget.data.linkStream,);
     _betterPlayerController = BetterPlayerController(betterPlayerConfiguration);
@@ -63,16 +47,18 @@ class _WatchAnimeScreenState extends State<WatchAnimeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          title: Text(widget.data.title ?? ''),
+          elevation: 0,
+        ),
         body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               BetterPlayerMultipleGestureDetector(
                 onTap: (){
-
                 },
                 child: AspectRatio(
                   aspectRatio: 16/9,
@@ -80,14 +66,47 @@ class _WatchAnimeScreenState extends State<WatchAnimeScreen> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: FlatButton(
-                  child: Text('Back'),
-                  color: Colors.orange,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                  onPressed: (){
-                    Navigator.pop(context);
-                  },
+                padding: EdgeInsets.all(8),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    widget.data.prev.isEmpty?Center():FlatButton(
+                      child: Text('Eps.Sebelumnya'),
+                      color: Colors.red,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                      onPressed: (){
+                        final _res = LatestEpisodeModel(
+                          animeEndpoint: widget.animeId,
+                          episodeEndpoint: widget.data.prev,
+                          episodeTitle: widget.data.title,
+                          lastEpisode: 0,
+                        );
+                        _latestEpisodeBox.add(_res);
+                        context.read<LatestEpsCubit>().update();
+                        Navigator.popAndPushNamed(context, rWatchAnime,arguments: widget.data.prev);
+                      },
+                    ),
+                    widget.data.prev.isEmpty || widget.data.next.isEmpty?Center():SizedBox(width: 8,),
+                    widget.data.next.isEmpty?Container():FlatButton(
+                      child: Text('Eps.Berikutnya'),
+                      color: Colors.blue,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                      onPressed: (){
+                        final _res = LatestEpisodeModel(
+                            animeEndpoint: widget.animeId,
+                            episodeEndpoint: widget.data.next,
+                            episodeTitle: widget.data.title,
+                            lastEpisode: 0,
+                        );
+                        _latestEpisodeBox.add(_res);
+                        context.read<LatestEpsCubit>().update();
+                        Navigator.popAndPushNamed(context, rWatchAnime,arguments: WatchAnimeParams(
+                          epsId: widget.data.next,animeId: widget.animeId,
+                        ));
+                      },
+                    ),
+                  ],
                 ),
               ),
               Padding(
@@ -106,6 +125,25 @@ class _WatchAnimeScreenState extends State<WatchAnimeScreen> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                     side: BorderSide(color: Colors.red)
+                  ),
+                ),
+              ),
+              Center(
+                child: Padding(
+                  padding: EdgeInsets.all(8),
+                  child: FlatButton(
+                    onPressed: (){
+                      print(widget.data.alternateStream);
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text('Alternatif streaming klik disini',style: TextStyle(color: Colors.blue),),
+                    ),
+                    color: Colors.transparent,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        side: BorderSide(color: Colors.blue)
+                    ),
                   ),
                 ),
               ),

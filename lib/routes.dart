@@ -34,7 +34,7 @@ Route generateRoute(RouteSettings settings){
       _route = _pageRoute(body: DetailAnimeScreen(id: _args,),settings: settings);
       break;
     case rWatchAnime:
-      _route = _pageRoute(body: IndexWatchAnime(id: _args,),settings: settings);
+      _route = _pageRoute(body: IndexWatchAnime(data: _args,),settings: settings);
       break;
     case rBatchAnime:
       _route = _pageRoute(body: BatchAnimeScreen(data: _args,),settings: settings);

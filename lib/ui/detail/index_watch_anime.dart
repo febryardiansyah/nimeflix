@@ -7,10 +7,17 @@ import 'package:nimeflix/ui/detail/watch_anime_screen.dart';
 import 'package:nimeflix/widgets/my_loading_screen.dart';
 import 'package:nimeflix/widgets/reconnect_button.dart';
 
-class IndexWatchAnime extends StatefulWidget {
-  final String id;
+class WatchAnimeParams{
+  final String animeId;
+  final String epsId;
 
-  const IndexWatchAnime({Key key, this.id}) : super(key: key);
+  WatchAnimeParams({this.animeId, this.epsId});
+}
+
+class IndexWatchAnime extends StatefulWidget {
+  final WatchAnimeParams data;
+
+  const IndexWatchAnime({Key key, this.data}) : super(key: key);
   @override
   _IndexWatchAnimeState createState() => _IndexWatchAnimeState();
 }
@@ -19,7 +26,7 @@ class _IndexWatchAnimeState extends State<IndexWatchAnime> {
   @override
   void initState() {
     super.initState();
-    context.read<GetEpsAnimeCubit>().fetchEpsAnime(id: widget.id);
+    context.read<GetEpsAnimeCubit>().fetchEpsAnime(id: widget.data.epsId);
   }
   @override
   Widget build(BuildContext context) {
@@ -30,10 +37,10 @@ class _IndexWatchAnimeState extends State<IndexWatchAnime> {
             return MyLoadingScreen();
           }
           if (state is GetEpsAnimeFailure) {
-            return ReconnectButton(msg: state.msg,onReconnect: ()=>context.read<GetEpsAnimeCubit>().fetchEpsAnime(id: widget.id),);
+            return ReconnectButton(msg: state.msg,onReconnect: ()=>context.read<GetEpsAnimeCubit>().fetchEpsAnime(id: widget.data.epsId),);
           }
           if (state is GetEpsAnimeSuccess) {
-            return WatchAnimeScreen(data: state.data,);
+            return WatchAnimeScreen(data: state.data,animeId: widget.data.animeId,);
           }
           return Container();
         },

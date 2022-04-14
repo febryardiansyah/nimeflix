@@ -1,4 +1,3 @@
-// import 'package:facebook_audience_network/facebook_audience_network.dart';
 import 'dart:io';
 
 import 'package:admob_flutter/admob_flutter.dart';
@@ -16,6 +15,7 @@ import 'package:nimeflix/bloc/get_mirror_stream/get_mirror_stream_cubit.dart';
 import 'package:nimeflix/bloc/get_notification/get_notification_cubit.dart';
 import 'package:nimeflix/bloc/get_ongoing_anime/get_ongoing_anime_cubit.dart';
 import 'package:nimeflix/bloc/get_schedule/get_schedule_cubit.dart';
+import 'package:nimeflix/bloc/latest_eps/latest_eps_cubit.dart';
 import 'package:nimeflix/bloc/search_anime/search_anime_cubit.dart';
 import 'package:nimeflix/constants/BaseConstants.dart';
 import 'package:nimeflix/services/create_http_client.dart';
@@ -32,7 +32,7 @@ import 'bloc/get_home/get_home_cubit.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   // FacebookAudienceNetwork.init();
-  Admob.initialize(testDeviceIds: ['BB7F1F5EA9C9ABA548482D5084EF102F']);
+  // Admob.initialize(testDeviceIds: ['BB7F1F5EA9C9ABA548482D5084EF102F']);
   // Admob.initialize();
   HttpOverrides.global = new MyHttpOverrides();
 
@@ -88,6 +88,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => GetMirrorStreamCubit(),
+        ),
+        BlocProvider(
+          create: (_) => LatestEpsCubit(),
         ),
         BlocProvider(
           create: (_) => GetNotificationCubit()..fetchNotification(),

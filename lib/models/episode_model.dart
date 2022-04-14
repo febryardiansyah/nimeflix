@@ -8,12 +8,18 @@ class EpisodeModel {
     this.mirror1,
     this.mirror2,
     this.mirror3,
+    this.alternateStream,
+    this.next,
+    this.prev,
   });
 
   String title;
   String baseUrl;
   String id;
   String linkStream;
+  String alternateStream;
+  String next;
+  String prev;
   EpisodeQualityModel quality;
   MirrorQuality mirror1;
   MirrorQuality mirror2;
@@ -24,6 +30,9 @@ class EpisodeModel {
     baseUrl: json["baseUrl"],
     id: json["id"],
     linkStream: json["link_stream"],
+    alternateStream: json['alternate_stream'],
+    next: json['next'],
+    prev: json['prev'],
     quality: EpisodeQualityModel.fromJson(json["quality"]),
     mirror1: MirrorQuality.fromJson(json['mirror1']),
     mirror2: MirrorQuality.fromJson(json['mirror2']),
