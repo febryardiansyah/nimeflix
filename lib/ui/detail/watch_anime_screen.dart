@@ -7,6 +7,8 @@ import 'package:nimeflix/models/episode_model.dart';
 import 'package:nimeflix/routes.dart';
 import 'package:nimeflix/ui/detail/index_watch_anime.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+
 
 import '../../constants/BaseConstants.dart';
 import '../../utils/hive_database/latest_episode_model.dart';
@@ -22,6 +24,8 @@ class WatchAnimeScreen extends StatefulWidget {
 }
 
 class _WatchAnimeScreenState extends State<WatchAnimeScreen> {
+
+  final ChromeSafariBrowser browser = new MyChromeSafariBrowser();
 
   final _latestEpisodeBox = Hive.box(BaseConstants.hLatestEpisode);
 
@@ -131,19 +135,26 @@ class _WatchAnimeScreenState extends State<WatchAnimeScreen> {
               Center(
                 child: Padding(
                   padding: EdgeInsets.all(8),
-                  child: FlatButton(
-                    onPressed: (){
-                      print(widget.data.alternateStream);
+                  child: RaisedButton(
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                    onPressed: ()async{
+                      await browser.open(
+                        url: Uri.parse(widget.data.alternateStream),
+                        options: ChromeSafariBrowserClassOptions(
+                          android: AndroidChromeCustomTabsOptions(
+                            addDefaultShareMenuItem: false,enableUrlBarHiding: true,
+                            keepAliveEnabled: true,toolbarBackgroundColor: Colors.black12,
+                          ),
+                          ios: IOSSafariOptions(barCollapsingEnabled: true,),
+                        ),
+                      );
+                      // Navigator.pushNamed(context, rAlternateStream,arguments: widget.data.alternateStream);
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text('Alternatif streaming klik disini',style: TextStyle(color: Colors.blue),),
+                      child: Text('Alternatif streaming klik disini',style: TextStyle(color: Colors.black),),
                     ),
-                    color: Colors.transparent,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        side: BorderSide(color: Colors.blue)
-                    ),
+                    color: Colors.white,
                   ),
                 ),
               ),
@@ -292,5 +303,22 @@ class _WatchAnimeScreenState extends State<WatchAnimeScreen> {
         ),
       ),
     );
+  }
+}
+
+class MyChromeSafariBrowser extends ChromeSafariBrowser {
+  @override
+  void onOpened() {
+    print("ChromeSafari browser opened");
+  }
+
+  @override
+  void onCompletedInitialLoad() {
+    print("ChromeSafari browser initial load completed");
+  }
+
+  @override
+  void onClosed() {
+    print("ChromeSafari browser closed");
   }
 }

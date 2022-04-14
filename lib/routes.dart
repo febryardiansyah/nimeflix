@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nimeflix/my_bottom_nav.dart';
+import 'package:nimeflix/ui/detail/alternate_stream_screen.dart';
 import 'package:nimeflix/ui/detail/batch_anime_screen.dart';
 import 'package:nimeflix/ui/detail/detail_anime_screen.dart';
 import 'package:nimeflix/ui/detail/index_watch_anime.dart';
@@ -72,6 +73,9 @@ Route generateRoute(RouteSettings settings){
     case rHistoryAnime:
       _route = _pageRoute(body: MoreHistoryAnimeScreen(),settings: settings);
       break;
+    case rAlternateStream:
+      _route = _pageRoute(body: AlternateStreamScreen(id: _args),settings: settings);
+      break;
   }
   return _route;
 }
@@ -92,3 +96,4 @@ const String rMirrorStreaming = '/mirrorStreaming';
 const String rSearch = '/search';
 const String rSearchResult = '/searchResult';
 const String rHistoryAnime = '/historyAnime';
+const String rAlternateStream = '/alternateStream';
