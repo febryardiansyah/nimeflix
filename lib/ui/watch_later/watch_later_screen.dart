@@ -55,6 +55,7 @@ class _WatchLaterScreenState extends State<WatchLaterScreen> {
             SaveForLaterModel _item = _box.getAt(i);
             return ListTile(
               onTap: (){
+                print(_item.endpoint);
                 Navigator.pushNamed(context, rDetailAnime,arguments: _item.endpoint);
               },
               leading: Image.network(_item.thumb,fit: BoxFit.cover,),

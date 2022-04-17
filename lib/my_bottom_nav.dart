@@ -18,14 +18,9 @@ class MyBottomNav extends StatefulWidget {
 
 class _MyBottomNavState extends State<MyBottomNav> {
   int _currentIndex = 0;
+  List<int> pages = [0,];
   AdmobInterstitial _interstitialAd;
 
-  List<Widget> _children = [
-    HomeScreen(),
-    ScheduleScreen(),
-    WatchLaterScreen(),
-    MoreScreen(),
-  ];
   @override
   void initState() {
     super.initState();
@@ -47,6 +42,12 @@ class _MyBottomNavState extends State<MyBottomNav> {
   }
   @override
   Widget build(BuildContext context) {
+    List<Widget> _children = [
+      HomeScreen(),
+      pages.contains(1)?ScheduleScreen():Container(),
+      pages.contains(2)?WatchLaterScreen():Container(),
+      pages.contains(3)?MoreScreen():Container(),
+    ];
     return Scaffold(
       body: IndexedStack(
         children: _children,
@@ -62,7 +63,12 @@ class _MyBottomNavState extends State<MyBottomNav> {
               print('rewardedAd not show');
             }
           }
+          List _pages = pages;
           setState(() {
+            if (!_pages.contains(val)) {
+              _pages.add(val);
+            }
+            pages = _pages;
             _currentIndex = val;
           });
         },

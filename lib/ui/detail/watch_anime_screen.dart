@@ -1,3 +1,4 @@
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:better_player/better_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,6 +33,8 @@ class _WatchAnimeScreenState extends State<WatchAnimeScreen> {
   BetterPlayerController _betterPlayerController;
   BetterPlayerDataSource _betterPlayerDataSource;
 
+  AdmobInterstitial _interstitialAd;
+
   @override
   void initState() {
     super.initState();
@@ -42,10 +45,22 @@ class _WatchAnimeScreenState extends State<WatchAnimeScreen> {
     _betterPlayerDataSource = BetterPlayerDataSource(BetterPlayerDataSourceType.network, widget.data.linkStream,);
     _betterPlayerController = BetterPlayerController(betterPlayerConfiguration);
     _betterPlayerController.setupDataSource(_betterPlayerDataSource);
+
+    _interstitialAd = AdmobInterstitial(
+        adUnitId: BaseConstants.interstitialAddId,
+        listener: (event,args){
+          print('INTERSTITIAL EVENT ==> $event');
+          if (event == AdmobAdEvent.closed){
+            _interstitialAd.load();
+          }
+        }
+    );
+    _interstitialAd?.load();
   }
   @override
   void dispose() {
     _betterPlayerController?.dispose();
+    _interstitialAd?.dispose();
     super.dispose();
   }
 
@@ -79,7 +94,7 @@ class _WatchAnimeScreenState extends State<WatchAnimeScreen> {
                       child: Text('Eps.Sebelumnya'),
                       color: Colors.red,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                      onPressed: (){
+                      onPressed: ()async{
                         final _res = LatestEpisodeModel(
                           animeEndpoint: widget.animeId,
                           episodeEndpoint: widget.data.prev,
@@ -88,7 +103,14 @@ class _WatchAnimeScreenState extends State<WatchAnimeScreen> {
                         );
                         _latestEpisodeBox.add(_res);
                         context.read<LatestEpsCubit>().update();
-                        Navigator.popAndPushNamed(context, rWatchAnime,arguments: widget.data.prev);
+                        if (await _interstitialAd.isLoaded) {
+                          _interstitialAd.show();
+                        } else {
+                          print('ads wont loaded');
+                        }
+                        Navigator.popAndPushNamed(context, rWatchAnime,arguments: WatchAnimeParams(
+                          epsId: widget.data.prev,animeId: widget.animeId,
+                        ));
                       },
                     ),
                     widget.data.prev.isEmpty || widget.data.next.isEmpty?Center():SizedBox(width: 8,),
@@ -96,7 +118,7 @@ class _WatchAnimeScreenState extends State<WatchAnimeScreen> {
                       child: Text('Eps.Berikutnya'),
                       color: Colors.blue,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                      onPressed: (){
+                      onPressed: ()async{
                         final _res = LatestEpisodeModel(
                             animeEndpoint: widget.animeId,
                             episodeEndpoint: widget.data.next,
@@ -105,6 +127,11 @@ class _WatchAnimeScreenState extends State<WatchAnimeScreen> {
                         );
                         _latestEpisodeBox.add(_res);
                         context.read<LatestEpsCubit>().update();
+                        if (await _interstitialAd.isLoaded) {
+                          _interstitialAd.show();
+                        } else {
+                          print('ads wont loaded');
+                        }
                         Navigator.popAndPushNamed(context, rWatchAnime,arguments: WatchAnimeParams(
                           epsId: widget.data.next,animeId: widget.animeId,
                         ));
@@ -144,6 +171,7 @@ class _WatchAnimeScreenState extends State<WatchAnimeScreen> {
                           android: AndroidChromeCustomTabsOptions(
                             addDefaultShareMenuItem: false,enableUrlBarHiding: true,
                             keepAliveEnabled: true,toolbarBackgroundColor: Colors.black12,
+                            showTitle: false,
                           ),
                           ios: IOSSafariOptions(barCollapsingEnabled: true,),
                         ),

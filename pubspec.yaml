@@ -60,6 +60,7 @@ dependencies:
 #  flutter_math_fork: ^0.5.0
 
   flutter_inappwebview: ^5.3.2
+#  sentry_flutter: ^6.4.0
 #  unity_ads_plugin: ^0.2.2
 #  facebook_audience_network: ^0.9.0
 #  google_mobile_ads: ^0.13.0

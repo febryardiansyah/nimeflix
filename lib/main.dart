@@ -32,7 +32,7 @@ import 'bloc/get_home/get_home_cubit.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   // FacebookAudienceNetwork.init();
-  // Admob.initialize(testDeviceIds: ['BB7F1F5EA9C9ABA548482D5084EF102F']);
+  Admob.initialize(testDeviceIds: ['BB7F1F5EA9C9ABA548482D5084EF102F']);
   // Admob.initialize();
   HttpOverrides.global = new MyHttpOverrides();
 
