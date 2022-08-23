@@ -10,6 +10,7 @@ import 'package:nimeflix/ui/home_screen/genre_list.dart';
 import 'package:nimeflix/ui/home_screen/my_carousel.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nimeflix/ui/home_screen/ongoing_anime.dart';
+import 'package:nimeflix/utils/local_pref.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -35,11 +36,20 @@ class _HomeScreenState extends State<HomeScreen> {
     context.read<GetGenresCubit>().fetchGenres();
     _refreshController.refreshCompleted();
   }
+
+  void _reminderNotififation()async{
+    final _notifPref = await LocalPref.getReminderNotif();
+    if (!_notifPref) {
+      await LocalPref.setReminderNotif();
+      _notifInit().then((value) => showNotification())
+          .catchError((err)=>print(err)); 
+    }
+  }
+
   @override
   void initState() {
     super.initState();
-    _notifInit().then((value) => showNotification())
-    .catchError((err)=>print(err));
+    _reminderNotififation();
     context.read<GetHomeCubit>().fetchHome();
     context.read<GetGenresCubit>().fetchGenres();
   }
@@ -114,12 +124,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ],
                 title: Container(
-                  width: 94,
+                  width: 40,
                   height: 40,
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage(BaseConstants.logoAsset,),
-                      fit: BoxFit.contain
+                      fit: BoxFit.fill
                     )
                   ),
                 )

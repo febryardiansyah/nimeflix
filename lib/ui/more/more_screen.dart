@@ -41,7 +41,15 @@ class MoreScreen extends StatelessWidget {
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,mainAxisSpacing: 7,crossAxisSpacing: 7,childAspectRatio: 4),
                 children: [
                   GestureDetector(
-                    onTap: ()=>Navigator.pushNamed(context, rAboutApp),
+                    // onTap: ()=>Navigator.pushNamed(context, rAboutApp),
+                    onTap: (){
+                      showAboutDialog(
+                        context: context,
+                        applicationName: 'Nimeflix',
+                        applicationVersion: 'Versi: ${BaseConstants.appVersion}',
+                        applicationIcon: Image.asset('assets/images/icon.png',height: 32,width: 32),
+                      );
+                    },
                     child: Container(
                       child: Center(child: Text('Tentang Aplikasi'),),
                       decoration: BoxDecoration(

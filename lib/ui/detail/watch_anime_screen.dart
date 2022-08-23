@@ -82,11 +82,11 @@ class _WatchAnimeScreenState extends State<WatchAnimeScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    widget.data.prev.isEmpty?Center():FlatButton(
+                    FlatButton(
                       child: Text('Eps.Sebelumnya'),
-                      color: Colors.red,
+                      color: widget.data.prev.isEmpty?Colors.grey:Colors.red,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                      onPressed: ()async{
+                      onPressed:widget.data.prev.isEmpty?null: ()async{
                         final _res = LatestEpisodeModel(
                           animeEndpoint: widget.animeId,
                           episodeEndpoint: widget.data.prev,
@@ -105,12 +105,12 @@ class _WatchAnimeScreenState extends State<WatchAnimeScreen> {
                         ));
                       },
                     ),
-                    widget.data.prev.isEmpty || widget.data.next.isEmpty?Center():SizedBox(width: 8,),
-                    widget.data.next.isEmpty?Container():FlatButton(
+                    Spacer(),
+                    FlatButton(
                       child: Text('Eps.Berikutnya'),
                       color: Colors.blue,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                      onPressed: ()async{
+                      onPressed: widget.data.next.isEmpty?null: ()async{
                         final _res = LatestEpisodeModel(
                             animeEndpoint: widget.animeId,
                             episodeEndpoint: widget.data.next,
