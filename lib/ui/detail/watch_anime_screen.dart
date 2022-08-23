@@ -1,5 +1,4 @@
 import 'package:admob_flutter/admob_flutter.dart';
-import 'package:better_player/better_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
@@ -29,23 +28,11 @@ class _WatchAnimeScreenState extends State<WatchAnimeScreen> {
   final ChromeSafariBrowser browser = new MyChromeSafariBrowser();
 
   final _latestEpisodeBox = Hive.box(BaseConstants.hLatestEpisode);
-
-  BetterPlayerController _betterPlayerController;
-  BetterPlayerDataSource _betterPlayerDataSource;
-
   AdmobInterstitial _interstitialAd;
 
   @override
   void initState() {
     super.initState();
-    BetterPlayerConfiguration betterPlayerConfiguration = BetterPlayerConfiguration(
-      aspectRatio: 16/9,fit: BoxFit.contain,autoPlay: false,allowedScreenSleep: false,
-      errorBuilder: (context,err)=>Center(child: Text('Video tidak dapat dimainkan, silahkan coba alternatif dibawah',textAlign: TextAlign.center,)),
-    );
-    _betterPlayerDataSource = BetterPlayerDataSource(BetterPlayerDataSourceType.network, widget.data.linkStream,);
-    _betterPlayerController = BetterPlayerController(betterPlayerConfiguration);
-    _betterPlayerController.setupDataSource(_betterPlayerDataSource);
-
     _interstitialAd = AdmobInterstitial(
         adUnitId: BaseConstants.interstitialAddId,
         listener: (event,args){
@@ -59,7 +46,6 @@ class _WatchAnimeScreenState extends State<WatchAnimeScreen> {
   }
   @override
   void dispose() {
-    _betterPlayerController?.dispose();
     _interstitialAd?.dispose();
     super.dispose();
   }
@@ -76,12 +62,18 @@ class _WatchAnimeScreenState extends State<WatchAnimeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              BetterPlayerMultipleGestureDetector(
-                onTap: (){
-                },
-                child: AspectRatio(
-                  aspectRatio: 16/9,
-                  child: BetterPlayer(controller: _betterPlayerController),
+              AspectRatio(
+                aspectRatio: 16/9,
+                child: InAppWebView(
+                  initialUrlRequest: URLRequest(
+                    url: Uri.parse('${widget.data.alternateStream}')
+                  ),
+                  androidOnPermissionRequest: (controller,origin,resources)async{
+                    return PermissionRequestResponse(
+                      action: PermissionRequestResponseAction.GRANT,
+                      resources: resources
+                    );
+                  }
                 ),
               ),
               Padding(
@@ -150,114 +142,87 @@ class _WatchAnimeScreenState extends State<WatchAnimeScreen> {
                   onPressed: null,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text('Note : Jika streaming diatas tidak bisa, silahkan ganti streaming atau download episode ini dibawah',style: TextStyle(color: Colors.red),),
+                    child: Text('Note : Silahkan klik ikon play dua kali untuk memulai video',style: TextStyle(color: Colors.yellow),),
                   ),
                   color: Colors.transparent,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
-                    side: BorderSide(color: Colors.red)
+                    side: BorderSide(color: Colors.yellow)
                   ),
                 ),
               ),
-              Center(
-                child: Padding(
-                  padding: EdgeInsets.all(8),
-                  child: RaisedButton(
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                    onPressed: ()async{
-                      await browser.open(
-                        url: Uri.parse(widget.data.alternateStream),
-                        options: ChromeSafariBrowserClassOptions(
-                          android: AndroidChromeCustomTabsOptions(
-                            addDefaultShareMenuItem: false,enableUrlBarHiding: true,
-                            keepAliveEnabled: true,toolbarBackgroundColor: Colors.black12,
-                            showTitle: false,
-                          ),
-                          ios: IOSSafariOptions(barCollapsingEnabled: true,),
-                        ),
-                      );
-                      // Navigator.pushNamed(context, rAlternateStream,arguments: widget.data.alternateStream);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text('Alternatif streaming klik disini',style: TextStyle(color: Colors.black),),
-                    ),
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(8),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Pilih kualitas video lainnya'),
-                    SizedBox(height: 10,),
-                    Container(
-                      margin: EdgeInsets.only(bottom: 8),
-                      decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.5),
-                        borderRadius: BorderRadius.circular(8)
-                      ),
-                      child: ExpansionTile(
-                        leading: Icon(Icons.tv_rounded),
-                        title: Text(widget.data.mirror1.quality),
-                        children: widget.data.mirror1.mirrorList.map((e){
-                          return ListTile(
-                            leading: Text((widget.data.mirror1.mirrorList.indexOf(e)+1).toString()),
-                            title: Text(e.host),
-                            trailing: Icon(Icons.arrow_forward_ios),
-                            onTap: ()async{
-                              Navigator.pushNamed(context, rMirrorStreaming,arguments: MirrorList(id: e.id,host: widget.data.id));
-                            },
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(bottom: 8),
-                      decoration: BoxDecoration(
-                          color: Colors.blue.withOpacity(0.5),
-                          borderRadius: BorderRadius.circular(8)
-                      ),
-                      child: ExpansionTile(
-                        leading: Icon(Icons.tv_rounded),
-                        title: Text(widget.data.mirror2.quality),
-                        children: widget.data.mirror2.mirrorList.map((e){
-                          return ListTile(
-                            leading: Text((widget.data.mirror2.mirrorList.indexOf(e)+1).toString()),
-                            title: Text(e.host),
-                            trailing: Icon(Icons.arrow_forward_ios),
-                            onTap: (){
-                              Navigator.pushNamed(context, rMirrorStreaming,arguments: MirrorList(id: e.id,host: widget.data.id));
-                            },
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                          color: Colors.red.withOpacity(0.5),
-                          borderRadius: BorderRadius.circular(8)
-                      ),
-                      child: ExpansionTile(
-                        leading: Icon(Icons.tv_rounded),
-                        title: Text(widget.data.mirror3.quality),
-                        children: widget.data.mirror3.mirrorList.map((e){
-                          return ListTile(
-                            leading: Text((widget.data.mirror3.mirrorList.indexOf(e)+1).toString()),
-                            title: Text(e.host),
-                            trailing: Icon(Icons.arrow_forward_ios),
-                            onTap: (){
-                              Navigator.pushNamed(context, rMirrorStreaming,arguments: MirrorList(id: e.id,host: widget.data.id));
-                            },
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              // Padding(
+              //   padding: EdgeInsets.all(8),
+              //   child: Column(
+              //     crossAxisAlignment: CrossAxisAlignment.start,
+              //     children: [
+              //       Text('Pilih kualitas video lainnya'),
+              //       SizedBox(height: 10,),
+              //       Container(
+              //         margin: EdgeInsets.only(bottom: 8),
+              //         decoration: BoxDecoration(
+              //           color: Colors.black.withOpacity(0.5),
+              //           borderRadius: BorderRadius.circular(8)
+              //         ),
+              //         child: ExpansionTile(
+              //           leading: Icon(Icons.tv_rounded),
+              //           title: Text(widget.data.mirror1.quality),
+              //           children: widget.data.mirror1.mirrorList.map((e){
+              //             return ListTile(
+              //               leading: Text((widget.data.mirror1.mirrorList.indexOf(e)+1).toString()),
+              //               title: Text(e.host),
+              //               trailing: Icon(Icons.arrow_forward_ios),
+              //               onTap: ()async{
+              //                 Navigator.pushNamed(context, rMirrorStreaming,arguments: MirrorList(id: e.id,host: widget.data.id));
+              //               },
+              //             );
+              //           }).toList(),
+              //         ),
+              //       ),
+              //       Container(
+              //         margin: EdgeInsets.only(bottom: 8),
+              //         decoration: BoxDecoration(
+              //             color: Colors.blue.withOpacity(0.5),
+              //             borderRadius: BorderRadius.circular(8)
+              //         ),
+              //         child: ExpansionTile(
+              //           leading: Icon(Icons.tv_rounded),
+              //           title: Text(widget.data.mirror2.quality),
+              //           children: widget.data.mirror2.mirrorList.map((e){
+              //             return ListTile(
+              //               leading: Text((widget.data.mirror2.mirrorList.indexOf(e)+1).toString()),
+              //               title: Text(e.host),
+              //               trailing: Icon(Icons.arrow_forward_ios),
+              //               onTap: (){
+              //                 Navigator.pushNamed(context, rMirrorStreaming,arguments: MirrorList(id: e.id,host: widget.data.id));
+              //               },
+              //             );
+              //           }).toList(),
+              //         ),
+              //       ),
+              //       Container(
+              //         decoration: BoxDecoration(
+              //             color: Colors.red.withOpacity(0.5),
+              //             borderRadius: BorderRadius.circular(8)
+              //         ),
+              //         child: ExpansionTile(
+              //           leading: Icon(Icons.tv_rounded),
+              //           title: Text(widget.data.mirror3.quality),
+              //           children: widget.data.mirror3.mirrorList.map((e){
+              //             return ListTile(
+              //               leading: Text((widget.data.mirror3.mirrorList.indexOf(e)+1).toString()),
+              //               title: Text(e.host),
+              //               trailing: Icon(Icons.arrow_forward_ios),
+              //               onTap: (){
+              //                 Navigator.pushNamed(context, rMirrorStreaming,arguments: MirrorList(id: e.id,host: widget.data.id));
+              //               },
+              //             );
+              //           }).toList(),
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
               Divider(),
               Padding(
                 padding: EdgeInsets.only(left: 10,right: 10,top: 20),

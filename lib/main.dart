@@ -4,6 +4,7 @@ import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:hive/hive.dart';
 import 'package:nimeflix/bloc/get_anime_by_genre/get_anime_by_genre_cubit.dart';
 import 'package:nimeflix/bloc/get_batch_anime/get_batch_anime_cubit.dart';
@@ -32,8 +33,13 @@ import 'bloc/get_home/get_home_cubit.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   // FacebookAudienceNetwork.init();
-  Admob.initialize(testDeviceIds: ['BB7F1F5EA9C9ABA548482D5084EF102F']);
+  // Admob.initialize(testDeviceIds: ['BB7F1F5EA9C9ABA548482D5084EF102F']);
   // Admob.initialize();
+
+   if (Platform.isAndroid) {
+    await AndroidInAppWebViewController.setWebContentsDebuggingEnabled(true);
+  }
+  
   HttpOverrides.global = new MyHttpOverrides();
 
   final _dir = await path_provider.getApplicationDocumentsDirectory();
