@@ -319,10 +319,9 @@ class _DetailAnimeScreenState extends State<DetailAnimeScreen> {
                             return Container(
                               padding: EdgeInsets.all(8),
                               margin: EdgeInsets.all(8),
-                              child: Center(child: Text(_item.genreName)),
+                              child: Center(child: Text(_item.genreName,style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold),),),
                               decoration: BoxDecoration(
-                                  color: Colors.transparent,
-                                  border: Border.all(color: Colors.red,width: 1,),
+                                  color: Colors.red.withOpacity(0.3),
                                   borderRadius: BorderRadius.circular(8)
                               ),
                             );
@@ -359,9 +358,8 @@ class _DetailAnimeScreenState extends State<DetailAnimeScreen> {
                           child: Container(
                             padding: EdgeInsets.all(8),
                             decoration: BoxDecoration(
-                                color: Colors.transparent,
+                                color: Colors.red,
                                 borderRadius: BorderRadius.circular(8),
-                                border: Border.all(width: 1,color: Colors.orange)
                             ),
                             child: Center(
                                 child: Text(_data.batchLink.id == 'Masih kosong gan'?_data.batchLink.id:'Download ${_data.title} batch sub indo',textAlign: TextAlign.center,)),
@@ -386,10 +384,6 @@ class _DetailAnimeScreenState extends State<DetailAnimeScreen> {
                           ],
                         ),
                       ),
-                      _episode != ''?Padding(
-                        padding: EdgeInsets.all(8),
-                        child: Center(child: Text('Episode terakhir yang ditonton :\n${_episode.replaceAll(_data.title, '').replaceAll('Subtitle Indonesia', '').trim()}',textAlign: TextAlign.center,)),
-                      ):Center(),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 10),
                         child: ListView.builder(
@@ -431,7 +425,7 @@ class _DetailAnimeScreenState extends State<DetailAnimeScreen> {
                                   padding: EdgeInsets.all(8),
                                   child: Center(child: Text(_item.title.replaceAll(_data.title, '').replaceAll('Subtitle Indonesia', '').trim(),textAlign: TextAlign.center,)),
                                   decoration: BoxDecoration(
-                                      color: _epsId == _item.id?Colors.red:Colors.transparent,
+                                      color: _epsId == _item.id?Colors.red:Colors.red.withOpacity(0.3),
                                       borderRadius: BorderRadius.circular(8),
                                       border: Border.all(width: 1,color: Colors.orange)
                                   ),

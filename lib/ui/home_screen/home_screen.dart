@@ -95,13 +95,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 backgroundColor: Colors.transparent,
                 expandedHeight: 70,
                 actions: [
-                  IconButton(
-                    icon: Icon(Icons.refresh),
-                    onPressed: (){
-                      context.read<GetHomeCubit>().fetchHome();
-                      context.read<GetGenresCubit>().fetchGenres();
-                    },
-                  ),
+                  // IconButton(
+                  //   icon: Icon(Icons.refresh),
+                  //   onPressed: (){
+                  //     context.read<GetHomeCubit>().fetchHome();
+                  //     context.read<GetGenresCubit>().fetchGenres();
+                  //   },
+                  // ),
                   Padding(
                     padding: EdgeInsets.only(right: 10),
                     child: IconButton(
