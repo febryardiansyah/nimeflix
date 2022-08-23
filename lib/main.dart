@@ -33,7 +33,7 @@ import 'bloc/get_home/get_home_cubit.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   // FacebookAudienceNetwork.init();
-  Admob.initialize(testDeviceIds: ['BB7F1F5EA9C9ABA548482D5084EF102F','C8B69504B0CED1ACA232AA363E9851CE']);
+  // Admob.initialize(testDeviceIds: ['BB7F1F5EA9C9ABA548482D5084EF102F','C8B69504B0CED1ACA232AA363E9851CE']);
   // Admob.initialize();
 
    if (Platform.isAndroid) {

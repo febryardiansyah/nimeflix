@@ -142,87 +142,41 @@ class _WatchAnimeScreenState extends State<WatchAnimeScreen> {
                   onPressed: null,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text('Note : Silahkan klik ikon play dua kali untuk memulai video',style: TextStyle(color: Colors.yellow),),
+                    child: Text('Note : Silahkan klik ikon play dua kali untuk memulai video',style: TextStyle(color: Colors.amber,)),
                   ),
                   color: Colors.transparent,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
-                    side: BorderSide(color: Colors.yellow)
+                    side: BorderSide(color: Colors.amber)
                   ),
                 ),
               ),
-              // Padding(
-              //   padding: EdgeInsets.all(8),
-              //   child: Column(
-              //     crossAxisAlignment: CrossAxisAlignment.start,
-              //     children: [
-              //       Text('Pilih kualitas video lainnya'),
-              //       SizedBox(height: 10,),
-              //       Container(
-              //         margin: EdgeInsets.only(bottom: 8),
-              //         decoration: BoxDecoration(
-              //           color: Colors.black.withOpacity(0.5),
-              //           borderRadius: BorderRadius.circular(8)
-              //         ),
-              //         child: ExpansionTile(
-              //           leading: Icon(Icons.tv_rounded),
-              //           title: Text(widget.data.mirror1.quality),
-              //           children: widget.data.mirror1.mirrorList.map((e){
-              //             return ListTile(
-              //               leading: Text((widget.data.mirror1.mirrorList.indexOf(e)+1).toString()),
-              //               title: Text(e.host),
-              //               trailing: Icon(Icons.arrow_forward_ios),
-              //               onTap: ()async{
-              //                 Navigator.pushNamed(context, rMirrorStreaming,arguments: MirrorList(id: e.id,host: widget.data.id));
-              //               },
-              //             );
-              //           }).toList(),
-              //         ),
-              //       ),
-              //       Container(
-              //         margin: EdgeInsets.only(bottom: 8),
-              //         decoration: BoxDecoration(
-              //             color: Colors.blue.withOpacity(0.5),
-              //             borderRadius: BorderRadius.circular(8)
-              //         ),
-              //         child: ExpansionTile(
-              //           leading: Icon(Icons.tv_rounded),
-              //           title: Text(widget.data.mirror2.quality),
-              //           children: widget.data.mirror2.mirrorList.map((e){
-              //             return ListTile(
-              //               leading: Text((widget.data.mirror2.mirrorList.indexOf(e)+1).toString()),
-              //               title: Text(e.host),
-              //               trailing: Icon(Icons.arrow_forward_ios),
-              //               onTap: (){
-              //                 Navigator.pushNamed(context, rMirrorStreaming,arguments: MirrorList(id: e.id,host: widget.data.id));
-              //               },
-              //             );
-              //           }).toList(),
-              //         ),
-              //       ),
-              //       Container(
-              //         decoration: BoxDecoration(
-              //             color: Colors.red.withOpacity(0.5),
-              //             borderRadius: BorderRadius.circular(8)
-              //         ),
-              //         child: ExpansionTile(
-              //           leading: Icon(Icons.tv_rounded),
-              //           title: Text(widget.data.mirror3.quality),
-              //           children: widget.data.mirror3.mirrorList.map((e){
-              //             return ListTile(
-              //               leading: Text((widget.data.mirror3.mirrorList.indexOf(e)+1).toString()),
-              //               title: Text(e.host),
-              //               trailing: Icon(Icons.arrow_forward_ios),
-              //               onTap: (){
-              //                 Navigator.pushNamed(context, rMirrorStreaming,arguments: MirrorList(id: e.id,host: widget.data.id));
-              //               },
-              //             );
-              //           }).toList(),
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
+              Divider(),
+              Padding(
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Jika video diatas tidak dapat diputar, silakan buka video melalui browser. Klik tombol dibawah untuk membukanya',
+                      style: TextStyle(
+                        color: Colors.red
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    FlatButton(
+                      child: Text('Buka video di Browser'),
+                      color: Colors.blueAccent,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8)
+                      ),
+                      onPressed: () async {
+                        launch('${widget.data.alternateStream}');
+                      },
+                    ),
+                  ],
+                ),
+              ),
               Divider(),
               Padding(
                 padding: EdgeInsets.only(left: 10,right: 10,top: 20),
