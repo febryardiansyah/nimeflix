@@ -171,7 +171,17 @@ class _WatchAnimeScreenState extends State<WatchAnimeScreen> {
                         borderRadius: BorderRadius.circular(8)
                       ),
                       onPressed: () async {
-                        launch('${widget.data.alternateStream}');
+                        await browser.open(
+                          url: Uri.parse(widget.data.alternateStream),
+                          options: ChromeSafariBrowserClassOptions(
+                            android: AndroidChromeCustomTabsOptions(
+                              addDefaultShareMenuItem: false,enableUrlBarHiding: true,
+                              keepAliveEnabled: true,toolbarBackgroundColor: Colors.black12,
+                              showTitle: false,
+                            ),
+                            ios: IOSSafariOptions(barCollapsingEnabled: true,),
+                          ),
+                        );
                       },
                     ),
                   ],
@@ -179,11 +189,11 @@ class _WatchAnimeScreenState extends State<WatchAnimeScreen> {
               ),
               Divider(),
               Padding(
-                padding: EdgeInsets.only(left: 10,right: 10,top: 20),
+                padding: EdgeInsets.only(left: 10,right: 10,),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Download episode ini'),
+                    Text('Download episode ini',style: TextStyle(fontWeight: FontWeight.bold)),
                     SizedBox(height: 10,),
                     Container(
                       margin: EdgeInsets.only(bottom: 10),
