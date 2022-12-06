@@ -75,19 +75,19 @@ class _MyBottomNavState extends State<MyBottomNav> {
         items: [
           BottomNavyBarItem(
             icon: Icon(Icons.home),
-            title: Text('Home')
+            title: Text('Beranda')
           ),
           BottomNavyBarItem(
             icon: Icon(Icons.date_range),
-            title: Text('Schedule')
+            title: Text('Jadwal')
           ),
           BottomNavyBarItem(
             icon: Icon(Icons.bookmark),
-            title: Text('Bookmarks')
+            title: Text('Tersimpan')
           ),
           BottomNavyBarItem(
             icon: Icon(Icons.more_vert),
-            title: Text('More')
+            title: Text('Lainnya')
           ),
         ],
       ),

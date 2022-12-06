@@ -6,6 +6,7 @@ import 'package:nimeflix/ui/detail/detail_anime_screen.dart';
 import 'package:nimeflix/ui/detail/index_watch_anime.dart';
 import 'package:nimeflix/ui/detail/mirror_stream_screen.dart';
 import 'package:nimeflix/ui/detail/watch_anime_screen.dart';
+import 'package:nimeflix/ui/detail/watch_full_screen.dart';
 import 'package:nimeflix/ui/more/anime_by_genre_screen.dart';
 import 'package:nimeflix/ui/more/more_complete_anime_screen.dart';
 import 'package:nimeflix/ui/more/more_history_anime.dart';
@@ -76,6 +77,9 @@ Route generateRoute(RouteSettings settings){
     case rAlternateStream:
       _route = _pageRoute(body: AlternateStreamScreen(id: _args),settings: settings);
       break;
+    case rWatchFullscreen:
+      _route = _pageRoute(body: WatchFullScreen(url: _args),settings: settings);
+      break;
   }
   return _route;
 }
@@ -97,3 +101,4 @@ const String rSearch = '/search';
 const String rSearchResult = '/searchResult';
 const String rHistoryAnime = '/historyAnime';
 const String rAlternateStream = '/alternateStream';
+const String rWatchFullscreen = '/watchFullscreen';
