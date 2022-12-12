@@ -78,14 +78,18 @@ class _MyCarouselState extends State<MyCarousel> {
                 }).toList(),
               ),
               Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: _data.map((e){
                   int index = _data.indexOf(e);
                   return Container(
-                    width: 8,height: 8,
+                    width: _currentIndex == index?14:8,
+                    height: 8,
                     margin: EdgeInsets.only(left: 6,top: 10,bottom: 10),
                     decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: _currentIndex == index?Colors.orange:Colors.grey
+                        shape: _currentIndex == index?BoxShape.rectangle:BoxShape.circle,
+                        color: _currentIndex == index?Colors.orange:Colors.grey,
+                        borderRadius: _currentIndex == index?BorderRadius.circular(4):null 
                     ),
                   );
                 }).toList(),

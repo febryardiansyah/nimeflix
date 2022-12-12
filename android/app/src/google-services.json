@@ -1,34 +1,33 @@
 {
   "project_info": {
-    "project_number": "998046135473",
-    "firebase_url": "https://manga-mint.firebaseio.com",
-    "project_id": "manga-mint",
-    "storage_bucket": "manga-mint.appspot.com"
+    "project_number": "1091080962050",
+    "project_id": "my-apps-46523",
+    "storage_bucket": "my-apps-46523.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:998046135473:android:f1981063759d64b1601e90",
+        "mobilesdk_app_id": "1:1091080962050:android:ec7f8fe23c5dc2906d671b",
         "android_client_info": {
-          "package_name": "com.febry.mangamint"
+          "package_name": "app.dotcom.nimex"
         }
       },
       "oauth_client": [
         {
-          "client_id": "998046135473-q8efo5cos6vbh2hgsemkl8uudgl98mf7.apps.googleusercontent.com",
+          "client_id": "1091080962050-v9qk73imi9fd52g28c1ubt8mbp23ulck.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyASN8JitGXCjXbiKstX7FoguS4ts8wlwkg"
+          "current_key": "AIzaSyDWBmUxAd9FtKEPV-LJXu4j3FKNdlsAg8o"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "998046135473-q8efo5cos6vbh2hgsemkl8uudgl98mf7.apps.googleusercontent.com",
+              "client_id": "1091080962050-v9qk73imi9fd52g28c1ubt8mbp23ulck.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
@@ -37,57 +36,27 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:998046135473:android:3135283b1595f0f2601e90",
+        "mobilesdk_app_id": "1:1091080962050:android:d26904b85376516d6d671b",
         "android_client_info": {
-          "package_name": "com.febry.nimeflix"
+          "package_name": "com.rykaa.bacamanga"
         }
       },
       "oauth_client": [
         {
-          "client_id": "998046135473-q8efo5cos6vbh2hgsemkl8uudgl98mf7.apps.googleusercontent.com",
+          "client_id": "1091080962050-v9qk73imi9fd52g28c1ubt8mbp23ulck.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyASN8JitGXCjXbiKstX7FoguS4ts8wlwkg"
+          "current_key": "AIzaSyDWBmUxAd9FtKEPV-LJXu4j3FKNdlsAg8o"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "998046135473-q8efo5cos6vbh2hgsemkl8uudgl98mf7.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      },
-      "admob_app_id": "ca-app-pub-5446765075160902~6039674136"
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:998046135473:android:6759df83dd4559ba601e90",
-        "android_client_info": {
-          "package_name": "com.febryardiansyah.kireimanga"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "998046135473-q8efo5cos6vbh2hgsemkl8uudgl98mf7.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyASN8JitGXCjXbiKstX7FoguS4ts8wlwkg"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "998046135473-q8efo5cos6vbh2hgsemkl8uudgl98mf7.apps.googleusercontent.com",
+              "client_id": "1091080962050-v9qk73imi9fd52g28c1ubt8mbp23ulck.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
@@ -96,65 +65,27 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:998046135473:android:eb538550dac0334f601e90",
+        "mobilesdk_app_id": "1:1091080962050:android:a5887f4fe38f70a06d671b",
         "android_client_info": {
-          "package_name": "com.febryardiansyah.mangakuy"
+          "package_name": "id.bibolstudio.bacamangaid"
         }
       },
       "oauth_client": [
         {
-          "client_id": "998046135473-q8efo5cos6vbh2hgsemkl8uudgl98mf7.apps.googleusercontent.com",
+          "client_id": "1091080962050-v9qk73imi9fd52g28c1ubt8mbp23ulck.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyASN8JitGXCjXbiKstX7FoguS4ts8wlwkg"
+          "current_key": "AIzaSyDWBmUxAd9FtKEPV-LJXu4j3FKNdlsAg8o"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "998046135473-q8efo5cos6vbh2hgsemkl8uudgl98mf7.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      },
-      "admob_app_id": "ca-app-pub-5446765075160902~6245985828"
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:998046135473:android:32423ffeae599751601e90",
-        "android_client_info": {
-          "package_name": "com.febryardiansyah.mangamint"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "998046135473-d3v0jjhfst16u0e1rjrhknctlbr1flvs.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.febryardiansyah.mangamint",
-            "certificate_hash": "2bad86ee58597238a558d253dc0c5a28ebbf149a"
-          }
-        },
-        {
-          "client_id": "998046135473-q8efo5cos6vbh2hgsemkl8uudgl98mf7.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyASN8JitGXCjXbiKstX7FoguS4ts8wlwkg"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "998046135473-q8efo5cos6vbh2hgsemkl8uudgl98mf7.apps.googleusercontent.com",
+              "client_id": "1091080962050-v9qk73imi9fd52g28c1ubt8mbp23ulck.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
@@ -163,130 +94,27 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:998046135473:android:3204a7940e81e608601e90",
+        "mobilesdk_app_id": "1:1091080962050:android:cb98523c5478edb56d671b",
         "android_client_info": {
-          "package_name": "com.febryardiansyah.ngedrakor"
+          "package_name": "id.bibolstudio.flutter_bacamanga"
         }
       },
       "oauth_client": [
         {
-          "client_id": "998046135473-q8efo5cos6vbh2hgsemkl8uudgl98mf7.apps.googleusercontent.com",
+          "client_id": "1091080962050-v9qk73imi9fd52g28c1ubt8mbp23ulck.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyASN8JitGXCjXbiKstX7FoguS4ts8wlwkg"
+          "current_key": "AIzaSyDWBmUxAd9FtKEPV-LJXu4j3FKNdlsAg8o"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "998046135473-q8efo5cos6vbh2hgsemkl8uudgl98mf7.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:998046135473:android:97ecfe342f7ed7cd601e90",
-        "android_client_info": {
-          "package_name": "com.febryardiansyah.nimeflix"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "998046135473-ibdt0i4ontf28487lplml99jqi5runs4.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.febryardiansyah.nimeflix",
-            "certificate_hash": "4d5472d0525080d0d8ef45d578d5975e88b49196"
-          }
-        },
-        {
-          "client_id": "998046135473-q8efo5cos6vbh2hgsemkl8uudgl98mf7.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyASN8JitGXCjXbiKstX7FoguS4ts8wlwkg"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "998046135473-q8efo5cos6vbh2hgsemkl8uudgl98mf7.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:998046135473:android:5520ec79257df26f601e90",
-        "android_client_info": {
-          "package_name": "com.febryardiansyah.nimeflixanime"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "998046135473-q8efo5cos6vbh2hgsemkl8uudgl98mf7.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyASN8JitGXCjXbiKstX7FoguS4ts8wlwkg"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "998046135473-q8efo5cos6vbh2hgsemkl8uudgl98mf7.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:998046135473:android:3af671aaf30f77ed601e90",
-        "android_client_info": {
-          "package_name": "com.kaedenoki.mangamint"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "998046135473-ic6m975b93t0jl9kfukpe87b1j1a9nls.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.kaedenoki.mangamint",
-            "certificate_hash": "d52398ac737a5026ac30efba2e8a7745e5b53d9e"
-          }
-        },
-        {
-          "client_id": "998046135473-q8efo5cos6vbh2hgsemkl8uudgl98mf7.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyASN8JitGXCjXbiKstX7FoguS4ts8wlwkg"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "998046135473-q8efo5cos6vbh2hgsemkl8uudgl98mf7.apps.googleusercontent.com",
+              "client_id": "1091080962050-v9qk73imi9fd52g28c1ubt8mbp23ulck.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

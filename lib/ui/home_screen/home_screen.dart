@@ -10,6 +10,7 @@ import 'package:nimeflix/ui/home_screen/genre_list.dart';
 import 'package:nimeflix/ui/home_screen/my_carousel.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nimeflix/ui/home_screen/ongoing_anime.dart';
+import 'package:nimeflix/utils/local_pref.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -35,11 +36,20 @@ class _HomeScreenState extends State<HomeScreen> {
     context.read<GetGenresCubit>().fetchGenres();
     _refreshController.refreshCompleted();
   }
+
+  void _reminderNotififation()async{
+    final _notifPref = await LocalPref.getReminderNotif();
+    if (!_notifPref) {
+      await LocalPref.setReminderNotif();
+      _notifInit().then((value) => showNotification())
+          .catchError((err)=>print(err)); 
+    }
+  }
+
   @override
   void initState() {
     super.initState();
-    _notifInit().then((value) => showNotification())
-    .catchError((err)=>print(err));
+    _reminderNotififation();
     context.read<GetHomeCubit>().fetchHome();
     context.read<GetGenresCubit>().fetchGenres();
   }
@@ -95,13 +105,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 backgroundColor: Colors.transparent,
                 expandedHeight: 70,
                 actions: [
-                  IconButton(
-                    icon: Icon(Icons.refresh),
-                    onPressed: (){
-                      context.read<GetHomeCubit>().fetchHome();
-                      context.read<GetGenresCubit>().fetchGenres();
-                    },
-                  ),
+                  // IconButton(
+                  //   icon: Icon(Icons.refresh),
+                  //   onPressed: (){
+                  //     context.read<GetHomeCubit>().fetchHome();
+                  //     context.read<GetGenresCubit>().fetchGenres();
+                  //   },
+                  // ),
                   Padding(
                     padding: EdgeInsets.only(right: 10),
                     child: IconButton(
@@ -114,12 +124,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ],
                 title: Container(
-                  width: 94,
+                  width: 40,
                   height: 40,
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage(BaseConstants.logoAsset,),
-                      fit: BoxFit.contain
+                      fit: BoxFit.fill
                     )
                   ),
                 )
@@ -148,7 +158,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     final InitializationSettings _initSetting = InitializationSettings(android: _initAndroid,iOS: null);
 
-    await _plugin.initialize(_initSetting,onSelectNotification: selectNotification);
+    await _plugin.initialize(_initSetting);
 
     tz.initializeTimeZones();
   }
@@ -170,7 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void showNotification()async{
     await _plugin.zonedSchedule(
         1,'Sudah nonton anime hari ini?', 'Berikut anime yang harus kamu tonton season ini',_nextSchedule(),
-        NotificationDetails(android: AndroidNotificationDetails(channel_id,'Nimeflix','To remind you about watching anime',)),
+        NotificationDetails(android: AndroidNotificationDetails(channel_id,'Nimeflix',)),
         androidAllowWhileIdle: true,uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
         payload: rMoreOngoingAnime,matchDateTimeComponents: DateTimeComponents.time
     );

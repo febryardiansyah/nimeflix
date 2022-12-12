@@ -19,7 +19,7 @@ class NotificationService {
 
     final InitializationSettings _initSetting = InitializationSettings(android: _initAndroid,iOS: null);
 
-    await _plugin.initialize(_initSetting,onSelectNotification: selectNotification);
+    await _plugin.initialize(_initSetting);
 
     tz.initializeTimeZones();
   }
