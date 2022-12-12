@@ -123,13 +123,6 @@ class MoreScreen extends StatelessWidget {
                 ],
               ),
             ),
-            Spacer(),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 20),
-              child: Center(
-                child: Text('dikembangkan oleh Febry Ardiansyah',style: TextStyle(color: Colors.grey),),
-              ),
-            )
           ],
         ),
       ),

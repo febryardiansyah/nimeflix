@@ -30,16 +30,20 @@ import 'package:nimeflix/routes.dart';
 
 import 'bloc/get_home/get_home_cubit.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // FacebookAudienceNetwork.init();
-  Admob.initialize(testDeviceIds: ['BB7F1F5EA9C9ABA548482D5084EF102F','C8B69504B0CED1ACA232AA363E9851CE']);
+  Admob.initialize(testDeviceIds: [
+    'BB7F1F5EA9C9ABA548482D5084EF102F',
+    'C8B69504B0CED1ACA232AA363E9851CE',
+    'DE5B702C28748FD74BEDC3E5A0641171',
+  ]);
   // Admob.initialize();
 
-   if (Platform.isAndroid) {
+  if (Platform.isAndroid) {
     await AndroidInAppWebViewController.setWebContentsDebuggingEnabled(true);
   }
-  
+
   HttpOverrides.global = new MyHttpOverrides();
 
   final _dir = await path_provider.getApplicationDocumentsDirectory();
@@ -53,8 +57,9 @@ void main() async{
   Hive.registerAdapter(LatestEpisodeModelAdapter());
   Hive.registerAdapter(LatestDurationWatchedModelAdapter());
   Hive.registerAdapter(HistoryAnimeModelAdapter());
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitDown,DeviceOrientation.portraitUp])
-  .then((value) => runApp(MyApp()));
+  SystemChrome.setPreferredOrientations(
+          [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp])
+      .then((value) => runApp(MyApp()));
 }
 
 class MyApp extends StatelessWidget {

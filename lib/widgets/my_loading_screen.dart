@@ -8,7 +8,12 @@ class MyLoadingScreen extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        LoadingIndicator(indicatorType: Indicator.ballClipRotateMultiple,color: Colors.white,),
+        LoadingIndicator(
+          indicatorType: Indicator.ballClipRotateMultiple,
+          colors: [
+            Colors.white,
+          ],
+        ),
         Text('Tunggu sebentar...')
       ],
     );

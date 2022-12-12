@@ -158,7 +158,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     final InitializationSettings _initSetting = InitializationSettings(android: _initAndroid,iOS: null);
 
-    await _plugin.initialize(_initSetting,onSelectNotification: selectNotification);
+    await _plugin.initialize(_initSetting);
 
     tz.initializeTimeZones();
   }
@@ -180,7 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void showNotification()async{
     await _plugin.zonedSchedule(
         1,'Sudah nonton anime hari ini?', 'Berikut anime yang harus kamu tonton season ini',_nextSchedule(),
-        NotificationDetails(android: AndroidNotificationDetails(channel_id,'Nimeflix','To remind you about watching anime',)),
+        NotificationDetails(android: AndroidNotificationDetails(channel_id,'Nimeflix',)),
         androidAllowWhileIdle: true,uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
         payload: rMoreOngoingAnime,matchDateTimeComponents: DateTimeComponents.time
     );

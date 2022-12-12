@@ -209,7 +209,7 @@ class _DetailAnimeScreenState extends State<DetailAnimeScreen> {
                                       _isAnimeSaved = true;
                                     });
                                     save.add(res);
-                                    Toast.show("Berhasil disimpan", context, duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
+                                    Toast.show("Berhasil disimpan", );
                                   }else{
                                     if (_isAnimeSaved) {
                                       for(int i = 0;i<save.length;i++){
@@ -221,13 +221,13 @@ class _DetailAnimeScreenState extends State<DetailAnimeScreen> {
                                       setState(() {
                                         _isAnimeSaved = false;
                                       });
-                                      Toast.show("Berhasil dihapus", context, duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
+                                      Toast.show("Berhasil dihapus",duration: Toast.lengthLong, gravity: Toast.bottom);
                                     } else{
                                       setState(() {
                                         _isAnimeSaved = true;
                                       });
                                       save.add(res);
-                                      Toast.show("Berhasil disimpan", context, duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
+                                      Toast.show("Berhasil disimpan",duration: Toast.lengthLong, gravity: Toast.bottom);
                                     }
 
                                   }
