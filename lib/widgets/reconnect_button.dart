@@ -18,16 +18,16 @@ class ReconnectButton extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              FlatButton(
+              ElevatedButton(
                 child: Text('Kembali'),
-                color: Colors.transparent,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8),side: BorderSide(color: Colors.white)),
+                // color: Colors.transparent,
+                // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8),side: BorderSide(color: Colors.white)),
                 onPressed: ()=>Navigator.pop(context),
               ),
-              FlatButton(
+              ElevatedButton(
                 child: Text('Muat ulang',style: TextStyle(color: Colors.red),),
-                color: Colors.transparent,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8),side: BorderSide(color: Colors.red)),
+                // color: Colors.transparent,
+                // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8),side: BorderSide(color: Colors.red)),
                 onPressed: onReconnect,
               ),
             ],

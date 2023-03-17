@@ -1,4 +1,4 @@
-import 'package:admob_flutter/admob_flutter.dart';
+// import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
@@ -26,28 +26,28 @@ class _WatchAnimeScreenState extends State<WatchAnimeScreen> {
   final ChromeSafariBrowser browser = new MyChromeSafariBrowser();
 
   final _latestEpisodeBox = Hive.box(BaseConstants.hLatestEpisode);
-  AdmobInterstitial _interstitialAd;
+  // AdmobInterstitial _interstitialAd;
   double progress = 0;
 
-  @override
-  void initState() {
-    super.initState();
-    _interstitialAd = AdmobInterstitial(
-        adUnitId: BaseConstants.interstitialAddId,
-        listener: (event, args) {
-          print('INTERSTITIAL EVENT ==> $event');
-          if (event == AdmobAdEvent.closed) {
-            _interstitialAd.load();
-          }
-        });
-    _interstitialAd?.load();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _interstitialAd = AdmobInterstitial(
+  //       adUnitId: BaseConstants.interstitialAddId,
+  //       listener: (event, args) {
+  //         print('INTERSTITIAL EVENT ==> $event');
+  //         if (event == AdmobAdEvent.closed) {
+  //           _interstitialAd.load();
+  //         }
+  //       });
+  //   _interstitialAd?.load();
+  // }
 
-  @override
-  void dispose() {
-    _interstitialAd?.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _interstitialAd?.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -103,12 +103,12 @@ class _WatchAnimeScreenState extends State<WatchAnimeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  FlatButton(
+                  ElevatedButton(
                     child: Text('Eps.Sebelumnya'),
-                    color: widget.data.prev.isEmpty ? Colors.grey : Colors.red,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
+                    // color: widget.data.prev.isEmpty ? Colors.grey : Colors.red,
+                    // shape: RoundedRectangleBorder(
+                    //   borderRadius: BorderRadius.circular(8),
+                    // ),
                     onPressed: widget.data.prev.isEmpty
                         ? null
                         : () async {
@@ -120,11 +120,11 @@ class _WatchAnimeScreenState extends State<WatchAnimeScreen> {
                             );
                             _latestEpisodeBox.add(_res);
                             context.read<LatestEpsCubit>().update();
-                            if (await _interstitialAd.isLoaded) {
-                              _interstitialAd.show();
-                            } else {
-                              print('ads wont loaded');
-                            }
+                            // if (await _interstitialAd.isLoaded) {
+                            //   _interstitialAd.show();
+                            // } else {
+                            //   print('ads wont loaded');
+                            // }
                             Navigator.popAndPushNamed(
                               context,
                               rWatchAnime,
@@ -136,12 +136,12 @@ class _WatchAnimeScreenState extends State<WatchAnimeScreen> {
                           },
                   ),
                   Spacer(),
-                  FlatButton(
+                  ElevatedButton(
                     child: Text('Eps.Berikutnya'),
-                    color: Colors.blue,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
+                    // color: Colors.blue,
+                    // shape: RoundedRectangleBorder(
+                    //   borderRadius: BorderRadius.circular(8),
+                    // ),
                     onPressed: widget.data.next.isEmpty
                         ? null
                         : () async {
@@ -153,11 +153,11 @@ class _WatchAnimeScreenState extends State<WatchAnimeScreen> {
                             );
                             _latestEpisodeBox.add(_res);
                             context.read<LatestEpsCubit>().update();
-                            if (await _interstitialAd.isLoaded) {
-                              _interstitialAd.show();
-                            } else {
-                              print('ads wont loaded');
-                            }
+                            // if (await _interstitialAd.isLoaded) {
+                            //   _interstitialAd.show();
+                            // } else {
+                            //   print('ads wont loaded');
+                            // }
                             Navigator.popAndPushNamed(
                               context,
                               rWatchAnime,
@@ -190,7 +190,7 @@ class _WatchAnimeScreenState extends State<WatchAnimeScreen> {
                     children: [
                       Padding(
                         padding: EdgeInsets.all(8),
-                        child: FlatButton(
+                        child: ElevatedButton(
                           onPressed: null,
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -201,11 +201,11 @@ class _WatchAnimeScreenState extends State<WatchAnimeScreen> {
                               ),
                             ),
                           ),
-                          color: Colors.transparent,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            side: BorderSide(color: Colors.amber),
-                          ),
+                          // color: Colors.transparent,
+                          // shape: RoundedRectangleBorder(
+                          //   borderRadius: BorderRadius.circular(8),
+                          //   side: BorderSide(color: Colors.amber),
+                          // ),
                         ),
                       ),
                       Divider(),
@@ -219,12 +219,12 @@ class _WatchAnimeScreenState extends State<WatchAnimeScreen> {
                               style: TextStyle(color: Colors.red),
                             ),
                             SizedBox(height: 8),
-                            FlatButton(
+                            ElevatedButton(
                               child: Text('Buka video di Browser'),
-                              color: Colors.blueAccent,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
+                              // color: Colors.blueAccent,
+                              // shape: RoundedRectangleBorder(
+                              //   borderRadius: BorderRadius.circular(8),
+                              // ),
                               onPressed: () async {
                                 await browser.open(
                                   url: Uri.parse(widget.data.alternateStream),

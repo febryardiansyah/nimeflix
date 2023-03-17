@@ -22,7 +22,7 @@ class _MoreHistoryAnimeScreenState extends State<MoreHistoryAnimeScreen> {
         title: Text('Terakhir dilihat'),
         elevation: 0,
         actions: [
-          _box.length == 0?Center():FlatButton(onPressed: (){
+          _box.length == 0?Center():ElevatedButton(onPressed: (){
             _box.clear();
           }, child: Text('Hapus semua'))
         ],

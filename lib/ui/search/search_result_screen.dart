@@ -1,4 +1,4 @@
-import 'package:admob_flutter/admob_flutter.dart';
+// import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nimeflix/bloc/search_anime/search_anime_cubit.dart';
@@ -17,13 +17,13 @@ class SearchResultScreen extends StatefulWidget {
 }
 
 class _SearchResultScreenState extends State<SearchResultScreen> {
-  AdmobBannerSize _bannerSize;
+  // AdmobBannerSize _bannerSize;
 
   @override
   void initState() {
     super.initState();
     context.read<SearchAnimeCubit>().searchAnime(query: widget.query);
-    _bannerSize = AdmobBannerSize.BANNER;
+    // _bannerSize = AdmobBannerSize.BANNER;
   }
   @override
   Widget build(BuildContext context) {
@@ -50,16 +50,16 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
                 child: Column(
                   children: [
                     Text('Hasil pencarian : ${widget.query}',style: TextStyle(fontStyle: FontStyle.italic),),
-                    Padding(
-                      padding: EdgeInsets.only(top: 10),
-                      child: AdmobBanner(
-                        adUnitId: BaseConstants.bannerAddId,
-                        adSize: _bannerSize,
-                        listener: (event,args){
-                          print('event : $event && args : $args');
-                        },
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: EdgeInsets.only(top: 10),
+                    //   child: AdmobBanner(
+                    //     adUnitId: BaseConstants.bannerAddId,
+                    //     adSize: _bannerSize,
+                    //     listener: (event,args){
+                    //       print('event : $event && args : $args');
+                    //     },
+                    //   ),
+                    // ),
                     _data.length == 0?Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text('Tidak ditemukan'),

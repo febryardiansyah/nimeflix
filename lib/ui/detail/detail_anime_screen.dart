@@ -1,4 +1,4 @@
-import 'package:admob_flutter/admob_flutter.dart';
+// import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -45,8 +45,8 @@ class _DetailAnimeScreenState extends State<DetailAnimeScreen> {
 
   String _epsId = '';
 
-  AdmobInterstitial _interstitialAd;
-  AdmobBannerSize _bannerSize;
+  // AdmobInterstitial _interstitialAd;
+  // AdmobBannerSize _bannerSize;
 
   void _checkIsSaved(){
     setState(() {
@@ -99,21 +99,21 @@ class _DetailAnimeScreenState extends State<DetailAnimeScreen> {
     context.read<GetDetailAnimeCubit>().fetchDetailAnime(id: widget.id);
     _checkIsSaved();
     _checkLatestEpisode();
-    _bannerSize = AdmobBannerSize.BANNER;
-    _interstitialAd = AdmobInterstitial(
-        adUnitId: BaseConstants.interstitialAddId,
-        listener: (event,args){
-          print('INTERSTITIAL EVENT ==> $event');
-          if (event == AdmobAdEvent.closed){
-            _interstitialAd?.load();
-          }
-        }
-    );
-    _interstitialAd?.load();
+    // _bannerSize = AdmobBannerSize.BANNER;
+    // _interstitialAd = AdmobInterstitial(
+    //     adUnitId: BaseConstants.interstitialAddId,
+    //     listener: (event,args){
+    //       print('INTERSTITIAL EVENT ==> $event');
+    //       if (event == AdmobAdEvent.closed){
+    //         _interstitialAd?.load();
+    //       }
+    //     }
+    // );
+    // _interstitialAd?.load();
   }
   @override
   void dispose() {
-    _interstitialAd?.dispose();
+    // _interstitialAd?.dispose();
     super.dispose();
   }
 
@@ -122,14 +122,14 @@ class _DetailAnimeScreenState extends State<DetailAnimeScreen> {
     _size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
-        bottomNavigationBar: AdmobBanner(
-          adUnitId: BaseConstants.bannerAddId,
-          adSize: _bannerSize,
-          listener: (AdmobAdEvent event,Map<String,dynamic>args){
-            print('event : $event');
-            print('args : $args');
-          },
-        ),
+        // bottomNavigationBar: AdmobBanner(
+        //   adUnitId: BaseConstants.bannerAddId,
+        //   adSize: _bannerSize,
+        //   listener: (AdmobAdEvent event,Map<String,dynamic>args){
+        //     print('event : $event');
+        //     print('args : $args');
+        //   },
+        // ),
         body: BlocListener<LatestEpsCubit, LatestEpsState>(
           listener: (context, state) {
             if (state is LatestEpsSuccess) {
@@ -348,11 +348,11 @@ class _DetailAnimeScreenState extends State<DetailAnimeScreen> {
                         padding: EdgeInsets.all(10),
                         child: GestureDetector(
                           onTap: _data.batchLink.id == 'Masih kosong gan'?null:()async{
-                              if (await _interstitialAd.isLoaded) {
-                                _interstitialAd.show();
-                              } else {
-                                print('ads wont loaded');
-                              }
+                              // if (await _interstitialAd.isLoaded) {
+                              //   _interstitialAd.show();
+                              // } else {
+                              //   print('ads wont loaded');
+                              // }
                             Navigator.pushNamed(context, rBatchAnime,arguments: _data);
                           },
                           child: Container(
@@ -409,11 +409,11 @@ class _DetailAnimeScreenState extends State<DetailAnimeScreen> {
                                     _epsId = _item.id;
                                   });
                                   _latestEpisodeBox.add(_res);
-                                  if (await _interstitialAd.isLoaded) {
-                                    _interstitialAd.show();
-                                  } else {
-                                    print('ads wont loaded');
-                                  }
+                                  // if (await _interstitialAd.isLoaded) {
+                                  //   _interstitialAd.show();
+                                  // } else {
+                                  //   print('ads wont loaded');
+                                  // }
                                   Future.delayed(Duration(seconds: 2),(){
                                     print('this navigation got printed?');
                                     Navigator.pushNamed(context, rWatchAnime,arguments: WatchAnimeParams(

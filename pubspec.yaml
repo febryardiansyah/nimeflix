@@ -21,7 +21,7 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
-  admob_flutter: ^2.0.0
+  # admob_flutter: ^2.0.0
   better_player: ^0.0.81
   bloc: ^8.0.3
   bottom_navy_bar: ^6.0.0

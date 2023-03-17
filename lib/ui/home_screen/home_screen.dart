@@ -77,11 +77,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
                 actions: [
-                  FlatButton(
+                  ElevatedButton(
                     onPressed: ()=>Navigator.pop(context),
                     child: Text('Nanti saja',style: TextStyle(color: Colors.red),),
                   ),
-                  FlatButton(
+                  ElevatedButton(
                     onPressed: ()async{
                       await launch(_data.link);
                     },

@@ -1,4 +1,4 @@
-import 'package:admob_flutter/admob_flutter.dart';
+// import 'package:admob_flutter/admob_flutter.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:nimeflix/constants/BaseConstants.dart';
@@ -19,25 +19,25 @@ class MyBottomNav extends StatefulWidget {
 class _MyBottomNavState extends State<MyBottomNav> {
   int _currentIndex = 0;
   List<int> pages = [0,];
-  AdmobInterstitial _interstitialAd;
+  // AdmobInterstitial _interstitialAd;
 
-  @override
-  void initState() {
-    super.initState();
-    _interstitialAd = AdmobInterstitial(
-        adUnitId: BaseConstants.interstitialAddId,
-        listener: (event,args){
-          print('INTERSTITIAL EVENT ==> $event');
-          if (event == AdmobAdEvent.closed){
-            _interstitialAd.load();
-          }
-        }
-    );
-    _interstitialAd.load();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _interstitialAd = AdmobInterstitial(
+  //       adUnitId: BaseConstants.interstitialAddId,
+  //       listener: (event,args){
+  //         print('INTERSTITIAL EVENT ==> $event');
+  //         if (event == AdmobAdEvent.closed){
+  //           _interstitialAd.load();
+  //         }
+  //       }
+  //   );
+  //   _interstitialAd.load();
+  // }
   @override
   void dispose() {
-    _interstitialAd.dispose();
+    // _interstitialAd.dispose();
     super.dispose();
   }
   @override
@@ -57,11 +57,11 @@ class _MyBottomNavState extends State<MyBottomNav> {
         selectedIndex: _currentIndex,
         onItemSelected: (val)async{
           if (val == 2) {
-            if (await _interstitialAd.isLoaded) {
-              _interstitialAd.show();
-            } else{
-              print('rewardedAd not show');
-            }
+            // if (await _interstitialAd.isLoaded) {
+            //   _interstitialAd.show();
+            // } else{
+            //   print('rewardedAd not show');
+            // }
           }
           List _pages = pages;
           setState(() {

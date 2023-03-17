@@ -61,12 +61,12 @@ class _WatchLaterScreenState extends State<WatchLaterScreen> {
               leading: Image.network(_item.thumb,fit: BoxFit.cover,),
               title: Text(_item.title.length > 30?'${_item.title.substring(0,30)}..':_item.title,style: TextStyle(fontWeight: FontWeight.bold),),
               subtitle: Text(_item.status),
-              trailing: FlatButton(
+              trailing: ElevatedButton(
                 child: Text('Hapus',style: TextStyle(color: Colors.red),),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  side: BorderSide(width: 1, color: Colors.red)
-                ),
+                // shape: RoundedRectangleBorder(
+                //   borderRadius: BorderRadius.circular(8),
+                //   side: BorderSide(width: 1, color: Colors.red)
+                // ),
                 onPressed: (){
                   _box.deleteAt(i);
                 },

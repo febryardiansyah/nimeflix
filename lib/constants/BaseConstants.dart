@@ -1,7 +1,7 @@
 class BaseConstants{
   static String logoAsset = 'assets/images/nimeflix-logo.png';
   static String wallpaper = 'assets/images/Day.jpg';
-  static String baseUrl = 'https://v3.nimeflix.kaedenoki.net/api/';
+  static String baseUrl = 'https://otaku.zkr.my.id/api/';
   static String appVersion = '1.0.0';
   static String otakudesuUrl = ' https://otakudesu.bid/';
   static String errorMessage = 'Terjadi kesalahan, silahkan coba lagi';
